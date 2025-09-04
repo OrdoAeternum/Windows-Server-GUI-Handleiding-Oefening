@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows Server 2022 - GUI Handleiding/Oefening</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .progress-container {
+            padding: 20px 40px 30px 40px;
+            margin-top: -10px;
+        }
+
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 0 auto;
+            max-width: 1000px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            border-radius: 15px;
+            width: 0%;
+            transition: width 0.5s ease;
+            position: relative;
+            z-index: 1;
+            box-sizing: border-box;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            color: #333;
+            text-shadow: none;
+            font-size: 12px;
+            text-align: center;
+            white-space: nowrap;
+            width: 100%;
+            z-index: 2;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #5a67d8 0%, #6b4799 100%);
+        }
+
+        .section-header h2 {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-number {
+            background: rgba(255,255,255,0.2);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .section-content {
+            padding: 25px;
+            display: none;
+            background: #f9f9f9;
+        }
+
+        .section.active .section-content {
+            display: block;
+        }
+
+        .steps-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .step-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            position: relative;
+        }
+
+        .step-item input[type="checkbox"] {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border: 2px solid #3b82f6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            display: flex;
+            align-items: start;
+            gap: 10px;
+        }
+
+        .info-icon {
+            color: #3b82f6;
+            font-size: 1.5em;
+            flex-shrink: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🖥️ Windows Server 2022 - GUI Handleiding/Oefening</h1>
+            <p>Uitgebreide gids voor Windows Server 2022 beheer via grafische interface</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill"></div>
+                <div class="progress-text" id="progressText">0% Voltooid</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Sectie 1: Hyper-V Lab Implementatie -->
+            <div class="section" id="section-1">
+                <div class="section-header" onclick="toggleSection(1)">
+                    <h2><span class="section-number">1</span> Hyper-V Lab Implementatie</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Deze handleiding beschrijft hoe je een volledig functionele Hyper-V lab/testomgeving opzet op Windows 10/11
+                            voor het draaien van server-VM's (AD DS, DHCP, RDS) en client-VM's.
+                        </div>
+                    </div>
+
+                    <h3>📋 Minimale Systeemvereisten</h3>
+                    <table>
+                        <tr>
+                            <th>Component</th>
+                            <th>Minimaal</th>
+                            <th>Aanbevolen</th>
+                        </tr>
+                        <tr>
+                            <td>Windows Versie</td>
+                            <td>Windows 10/11 Pro</td>
+                            <td>Windows 10/11 Enterprise/Education</td>
+                        </tr>
+                        <tr>
+                            <td>Processor</td>
+                            <td>4 cores met VT-x/AMD-V</td>
+                            <td>8+ cores met VT-x/AMD-V + SLAT</td>
+                        </tr>
+                        <tr>
+                            <td>RAM</td>
+                            <td>16 GB</td>
+                            <td>32 GB of meer</td>
+                        </tr>
+                        <tr>
+                            <td>Opslag</td>
+                            <td>256 GB SSD</td>
+                            <td>512 GB NVMe SSD</td>
+                        </tr>
+                        <tr>
+                            <td>Netwerk</td>
+                            <td>1x Gigabit NIC</td>
+                            <td>2x Gigabit NIC</td>
+                        </tr>
+                    </table>
+
+                    <h3>🔧 Uitvoeringsstappen</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 1.1: Controleer Windows versie</strong>
+                            <p>1. Rechtsklik op Start menu</p>
+                            <p>2. Selecteer "System"</p>
+                            <p>3. Controleer Windows versie onder "Windows specifications"</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 1.2: Controleer hardwarevirtualisatie</strong>
+                            <p>1. Open Taakbeheer (Ctrl+Shift+Esc)</p>
+                            <p>2. Ga naar tabblad "Performance"</p>
+                            <p>3. Selecteer "CPU" aan de linkerkant</p>
+                            <p>4. Controleer of "Virtualization: Enabled" wordt weergegeven</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 1.3: BIOS/UEFI virtualisatie inschakelen</strong>
+                            <p>Als virtualisatie niet is ingeschakeld:</p>
+                            <ol style="margin-left: 20px; margin-top: 10px;">
+                                <li>Herstart de computer</li>
+                                <li>Druk op DEL/F2/F10/F12 tijdens opstarten (verschilt per fabrikant)</li>
+                                <li>Zoek naar: Intel VT-x, AMD-V, SVM Mode, Virtualization Technology</li>
+                                <li>Schakel deze optie(s) in</li>
+                                <li>Sla op en herstart (meestal F10)</li>
+                            </ol>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 1.4: Download benodigde ISO bestanden</strong>
+                            <p>Download de volgende ISO's van Microsoft:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>Windows Server 2022 (evaluation)</li>
+                                <li>Windows 11 (indien client-VM's nodig zijn)</li>
+                            </ul>
+                            <p>Sla deze op in een folder zoals: <code>C:\ISO\</code></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sectie 2: Hyper-V Installatie en Configuratie -->
+            <div class="section" id="section-2">
+                <div class="section-header" onclick="toggleSection(2)">
+                    <h2><span class="section-number">2</span> Hyper-V Installatie en Configuratie</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Installeer en configureer Hyper-V op je Windows 10/11 host systeem voor het draaien van virtuele machines.
+                        </div>
+                    </div>
+
+                    <h3>🖱️ Via Windows Features GUI</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 2.1: Open Windows Features</strong>
+                            <p>1. Druk op Windows toets + R</p>
+                            <p>2. Type: <code>optionalfeatures</code></p>
+                            <p>3. Druk Enter</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 2.2: Selecteer Hyper-V componenten</strong>
+                            <p>Vink de volgende opties aan:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>☑ Hyper-V</li>
+                                <li style="margin-left: 20px;">☑ Hyper-V Management Tools</li>
+                                <li style="margin-left: 20px;">☑ Hyper-V Platform</li>
+                            </ul>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 2.3: Installeer en herstart</strong>
+                            <p>Klik OK en wacht tot de installatie voltooid is. Windows zal vragen om te herstarten.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sectie 3: Virtual Switch en Netwerk Configuratie -->
+            <div class="section" id="section-3">
+                <div class="section-header" onclick="toggleSection(3)">
+                    <h2><span class="section-number">3</span> Virtual Switch en Netwerk Configuratie</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Configureer virtuele switches voor netwerkconnectiviteit tussen VM's en het fysieke netwerk.
+                        </div>
+                    </div>
+
+                    <h3>🌐 Virtual Switch Types</h3>
+                    <table>
+                        <tr>
+                            <th>Type</th>
+                            <th>Gebruik</th>
+                            <th>Voordelen</th>
+                            <th>Nadelen</th>
+                        </tr>
+                        <tr>
+                            <td><strong>External</strong></td>
+                            <td>VM's direct op fysiek netwerk</td>
+                            <td>Volledige netwerkintegratie</td>
+                            <td>Mogelijke IP-conflicten</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Internal + NAT</strong></td>
+                            <td>Geïsoleerd lab met internet</td>
+                            <td>Geen conflicten, internet toegang</td>
+                            <td>Extra configuratie nodig</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Private</strong></td>
+                            <td>Volledig geïsoleerd lab</td>
+                            <td>Maximale isolatie</td>
+                            <td>Geen internet toegang</td>
+                        </tr>
+                    </table>
+
+                    <h3>🔧 NAT Switch Setup (Aanbevolen voor Lab)</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 3.1: Open Hyper-V Manager</strong>
+                            <p>1. Zoek naar "Hyper-V Manager" in Start menu</p>
+                            <p>2. Rechtsklik en selecteer "Run as administrator"</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 3.2: Maak Internal Switch</strong>
+                            <p>1. Klik rechts op je Hyper-V host in de linker paneel</p>
+                            <p>2. Selecteer "Virtual Switch Manager"</p>
+                            <p>3. Kies "Internal" en klik "Create Virtual Switch"</p>
+                            <p>4. Geef de switch een naam: "NATSwitch"</p>
+                            <p>5. Klik "Apply" en daarna "OK"</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 3.3: Configureer NAT Gateway</strong>
+                            <p>1. Open Control Panel</p>
+                            <p>2. Ga naar "Network and Sharing Center"</p>
+                            <p>3. Klik op "Change adapter settings"</p>
+                            <p>4. Rechtsklik op "vEthernet (NATSwitch)"</p>
+                            <p>5. Selecteer "Properties"</p>
+                            <p>6. Dubbelklik op "Internet Protocol Version 4 (TCP/IPv4)"</p>
+                            <p>7. Stel IP-adres in: 10.0.0.1</p>
+                            <p>8. Subnet mask: 255.255.255.0</p>
+                            <p>9. Klik OK</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 3.4: Configureer NAT</strong>
+                            <p>1. Open Control Panel → System and Security → Administrative Tools</p>
+                            <p>2. Dubbelklik op "Routing and Remote Access"</p>
+                            <p>3. Rechtsklik op je server en selecteer "Configure and Enable Routing and Remote Access"</p>
+                            <p>4. Kies "Network address translation (NAT)"</p>
+                            <p>5. Selecteer de externe netwerkadapter</p>
+                            <p>6. Klik Finish</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sectie 4: Virtual Machines Aanmaken -->
+            <div class="section" id="section-4">
+                <div class="section-header" onclick="toggleSection(4)">
+                    <h2><span class="section-number">4</span> Virtual Machines Aanmaken</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Maak virtuele machines aan voor je Windows Server 2022 lab omgeving.
+                        </div>
+                    </div>
+
+                    <h3>🖥️ Domain Controller VM (Windows Server 2022)</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 4.1: Maak Domain Controller VM</strong>
+                            <p>1. Open Hyper-V Manager</p>
+                            <p>2. Klik rechts op je Hyper-V host</p>
+                            <p>3. Selecteer "New" → "Virtual Machine"</p>
+                            <p>4. Klik "Next"</p>
+                            <p>5. Geef naam: "LAB-DC01"</p>
+                            <p>6. Kies Generation 2</p>
+                            <p>7. Stel Startup memory in: 4096 MB</p>
+                            <p>8. Configureer networking: NATSwitch</p>
+                            <p>9. Maak virtual hard disk: 60 GB</p>
+                            <p>10. Selecteer Windows Server 2022 ISO</p>
+                            <p>11. Klik Finish</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 4.2: Configureer VM Hardware</strong>
+                            <p>1. Rechtsklik op LAB-DC01 in Hyper-V Manager</p>
+                            <p>2. Selecteer "Settings"</p>
+                            <p>3. Ga naar "Processor"</p>
+                            <p>4. Stel Number of virtual processors in: 2</p>
+                            <p>5. Ga naar "Memory"</p>
+                            <p>6. Zet "Enable Dynamic Memory" uit</p>
+                            <p>7. Stel RAM in op 4096 MB</p>
+                            <p>8. Klik OK</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 4.3: Installeer Windows Server</strong>
+                            <ol style="margin-left: 20px; margin-top: 10px;">
+                                <li>Selecteer LAB-DC01 in Hyper-V Manager</li>
+                                <li>Klik "Connect" in de onderste paneel</li>
+                                <li>Klik "Start" om de VM te starten</li>
+                                <li>Druk een toets om van DVD te booten</li>
+                                <li>Selecteer: Windows Server 2022 Standard (Desktop Experience)</li>
+                                <li>Accepteer licentievoorwaarden</li>
+                                <li>Kies: Custom Install</li>
+                                <li>Selecteer de drive en klik Next</li>
+                                <li>Stel Administrator wachtwoord in na installatie</li>
+                            </ol>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sectie 5: Server Rollen en Features -->
+            <div class="section" id="section-5">
+                <div class="section-header" onclick="toggleSection(5)">
+                    <h2><span class="section-number">5</span> Server Rollen en Features</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Installeer en configureer essentiële server rollen zoals Active Directory en DHCP.
+                        </div>
+                    </div>
+
+                    <h3>🔧 Active Directory Domain Services (AD DS)</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 5.1: Installeer AD DS Role</strong>
+                            <p>1. Open Server Manager</p>
+                            <p>2. Klik op "Manage" → "Add Roles and Features"</p>
+                            <p>3. Klik "Next" tot "Server Roles"</p>
+                            <p>4. Vink aan: "Active Directory Domain Services"</p>
+                            <p>5. Klik "Add Features" als gevraagd</p>
+                            <p>6. Klik "Next" en daarna "Install"</p>
+                            <p>7. Wacht tot installatie voltooid is</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 5.2: Configureer Domain Controller</strong>
+                            <p>1. Klik op het vlaggetje rechtsboven in Server Manager</p>
+                            <p>2. Klik op "Promote this server to a domain controller"</p>
+                            <p>3. Kies "Add a new forest"</p>
+                            <p>4. Voer root domain name in: lab.local</p>
+                            <p>5. Stel Directory Services Restore Mode password in</p>
+                            <p>6. Klik "Next" door alle schermen</p>
+                            <p>7. Klik "Install"</p>
+                            <p>8. Server herstart automatisch</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 5.3: Controleer AD DS Installatie</strong>
+                            <p>1. Open Server Manager na herstart</p>
+                            <p>2. Klik op "Tools" → "Active Directory Users and Computers"</p>
+                            <p>3. Controleer of lab.local domain zichtbaar is</p>
+                        </li>
+                    </ul>
+
+                    <h3>📡 DHCP Server</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 5.4: Installeer DHCP Role</strong>
+                            <p>1. Open Server Manager</p>
+                            <p>2. Klik "Manage" → "Add Roles and Features"</p>
+                            <p>3. Vink aan: "DHCP Server"</p>
+                            <p>4. Klik "Add Features" als gevraagd</p>
+                            <p>5. Klik "Next" en "Install"</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 5.5: Authorize DHCP Server</strong>
+                            <p>1. Open Server Manager</p>
+                            <p>2. Klik "Tools" → "DHCP"</p>
+                            <p>3. Rechtsklik op de DHCP server</p>
+                            <p>4. Selecteer "Authorize"</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 5.6: Configureer DHCP Scope</strong>
+                            <p>1. In DHCP console, vouw server uit</p>
+                            <p>2. Rechtsklik op "IPv4"</p>
+                            <p>3. Selecteer "New Scope"</p>
+                            <p>4. Klik "Next"</p>
+                            <p>5. Geef naam: "LabScope"</p>
+                            <p>6. IP range: 10.0.0.100 tot 10.0.0.200</p>
+                            <p>7. Subnet mask: 255.255.255.0</p>
+                            <p>8. Klik "Next" door alle schermen</p>
+                            <p>9. Klik "Finish"</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sectie 6: Client Testing en Validatie -->
+            <div class="section" id="section-6">
+                <div class="section-header" onclick="toggleSection(6)">
+                    <h2><span class="section-number">6</span> Client Testing en Validatie</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Test de Windows Server 2022 lab omgeving met een virtuele client computer.
+                        </div>
+                    </div>
+
+                    <h3>🖥️ Client VM Aanmaken</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 6.1: Maak Windows 11 VM</strong>
+                            <p>1. Open Hyper-V Manager</p>
+                            <p>2. Klik "New" → "Virtual Machine"</p>
+                            <p>3. Naam: "LAB-CLIENT01"</p>
+                            <p>4. Generation: 2</p>
+                            <p>5. Memory: 4096 MB</p>
+                            <p>6. Network: NATSwitch</p>
+                            <p>7. Virtual hard disk: 60 GB</p>
+                            <p>8. Installation media: Windows 11 ISO</p>
+                            <p>9. Finish</p>
+                        </li>
+                    </ul>
+
+                    <h3>🌐 Domain Join Test</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 6.2: Controleer Netwerk & DNS</strong>
+                            <p>1. Start de client VM</p>
+                            <p>2. Open Command Prompt</p>
+                            <p>3. Type: <code>ipconfig /all</code></p>
+                            <p>4. Controleer IP adres (moet 10.0.0.x zijn)</p>
+                            <p>5. Test DNS: <code>nslookup lab-dc01.lab.local</code></p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 6.3: Join Domain</strong>
+                            <p>1. Rechtsklik op Start → System</p>
+                            <p>2. Klik "Rename this PC (advanced)"</p>
+                            <p>3. Klik "Change" onder "Computer name"</p>
+                            <p>4. Selecteer "Domain"</p>
+                            <p>5. Voer in: lab.local</p>
+                            <p>6. Voer domain admin credentials in</p>
+                            <p>7. Klik OK → herstart</p>
+                        </li>
+                    </ul>
+
+                    <h3>📁 File Services Test</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 6.4: Test File Share</strong>
+                            <p>1. Open File Explorer</p>
+                            <p>2. In adresbalk: <code>\\lab-dc01\LabShare</code></p>
+                            <p>3. Klik Enter</p>
+                            <p>4. Maak een test bestand</p>
+                            <p>5. Controleer of het werkt</p>
+                        </li>
+                    </ul>
+
+                    <h3>📋 Test Checklist</h3>
+                    <table style="margin-top: 10px;">
+                        <tr>
+                            <th>Service</th>
+                            <th>Test Procedure</th>
+                            <th>Expected</th>
+                        </tr>
+                        <tr>
+                            <td><strong>DHCP</strong></td>
+                            <td>ipconfig /all</td>
+                            <td>IP: 10.0.0.x</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DNS</strong></td>
+                            <td>nslookup lab-dc01.lab.local</td>
+                            <td>10.0.0.1</td>
+                        </tr>
+                        <tr>
+                            <td><strong>AD</strong></td>
+                            <td>whoami /domain</td>
+                            <td>lab.local</td>
+                        </tr>
+                        <tr>
+                            <td><strong>File Share</strong></td>
+                            <td>\\lab-dc01\LabShare</td>
+                            <td>Access granted</td>
+                        </tr>
+                    </table>
+
+                    <div class="info-box">
+                        <span class="info-icon">✅</span>
+                        <div>
+                            <strong>Validatie:</strong> Gebruik deze checklist om alle server services te testen vanaf de client VM.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sectie 7: IIS Web Server -->
+            <div class="section" id="section-7">
+                <div class="section-header" onclick="toggleSection(7)">
+                    <h2><span class="section-number">7</span> IIS Web Server</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Installeer en configureer Internet Information Services (IIS) voor web hosting.
+                        </div>
+                    </div>
+
+                    <h3>🌐 IIS Installatie</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 7.1: Installeer Web Server Role</strong>
+                            <p>1. Open Server Manager</p>
+                            <p>2. Klik "Manage" → "Add Roles and Features"</p>
+                            <p>3. Selecteer "Web Server (IIS)"</p>
+                            <p>4. Klik "Add Features" als gevraagd</p>
+                            <p>5. Kies gewenste IIS features:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>☑ Web Server</li>
+                                <li>☑ Common HTTP Features</li>
+                                <li>☑ Health and Diagnostics</li>
+                                <li>☑ Security</li>
+                                <li>☑ Application Development</li>
+                            </ul>
+                            <p>6. Klik "Next" en "Install"</p>
+                        </li>
+                    </ul>
+
+                    <h3>📄 Default Website Configuratie</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 7.2: Open IIS Manager</strong>
+                            <p>1. Open Server Manager</p>
+                            <p>2. Klik "Tools" → "Internet Information Services (IIS) Manager"</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 7.3: Configureer Default Website</strong>
+                            <p>1. Vouw server uit in linker paneel</p>
+                            <p>2. Klik op "Sites" → "Default Web Site"</p>
+                            <p>3. Rechtsklik → "Manage Website" → "Browse"</p>
+                            <p>4. Controleer of IIS startpagina zichtbaar is</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sectie 8: File Services -->
+            <div class="section" id="section-8">
+                <div class="section-header" onclick="toggleSection(8)">
+                    <h2><span class="section-number">8</span> File Services</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Configureer bestandsshares, DFS en opslagoplossingen.
+                        </div>
+                    </div>
+
+                    <h3>📁 File Server Installatie</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 8.1: Installeer File Services</strong>
+                            <p>1. Server Manager → "Add Roles and Features"</p>
+                            <p>2. Selecteer "File and Storage Services"</p>
+                            <p>3. Vink aan: "File and iSCSI Services"</p>
+                            <p>4. Kies: "File Server" en "DFS Namespaces"</p>
+                            <p>5. Klik "Install"</p>
+                        </li>
+                    </ul>
+
+                    <h3>🔗 DFS Namespace Setup</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 8.2: Maak DFS Namespace</strong>
+                            <p>1. Server Manager → "Tools" → "DFS Management"</p>
+                            <p>2. Rechtsklik "Namespaces" → "New Namespace"</p>
+                            <p>3. Server name: lokale server</p>
+                            <p>4. Naam: "LabNamespace"</p>
+                            <p>5. Type: Domain-based</p>
+                            <p>6. Klik "Next" door alle schermen</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 8.3: Voeg Folder toe</strong>
+                            <p>1. Rechtsklik op namespace → "New Folder"</p>
+                            <p>2. Naam: "SharedDocs"</p>
+                            <p>3. Voeg folder target toe: "\\server\share"</p>
+                            <p>4. Klik OK</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sectie 9: Remote Desktop Services -->
+            <div class="section" id="section-9">
+                <div class="section-header" onclick="toggleSection(9)">
+                    <h2><span class="section-number">9</span> Remote Desktop Services</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Configureer Remote Desktop Services voor externe toegang tot desktops en applicaties.
+                        </div>
+                    </div>
+
+                    <h3>🖥️ RDS Installatie</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 9.1: Installeer RDS Role</strong>
+                            <p>1. Server Manager → "Add Roles and Features"</p>
+                            <p>2. Selecteer "Remote Desktop Services"</p>
+                            <p>3. Kies deployment type: "Quick Start"</p>
+                            <p>4. Selecteer: RD Connection Broker, RD Web Access, RD Session Host</p>
+                            <p>5. Klik "Install"</p>
+                        </li>
+                    </ul>
+
+                    <h3>🔐 RDS Licensing</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 9.2: Configureer RDS Licensing</strong>
+                            <p>1. Server Manager → "Tools" → "Remote Desktop Services" → "RD Licensing Manager"</p>
+                            <p>2. Rechtsklik op server → "Activate Server"</p>
+                            <p>3. Kies "Automatic connection" of voer licentiesleutel in</p>
+                            <p>4. Configureer license server</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sectie 10: Windows Server Backup -->
+            <div class="section" id="section-10">
+                <div class="section-header" onclick="toggleSection(10)">
+                    <h2><span class="section-number">10</span> Windows Server Backup</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Configureer backup oplossingen voor disaster recovery.
+                        </div>
+                    </div>
+
+                    <h3>💾 Backup Installatie</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 10.1: Installeer Windows Server Backup</strong>
+                            <p>1. Server Manager → "Add Roles and Features"</p>
+                            <p>2. Selecteer "Windows Server Backup"</p>
+                            <p>3. Klik "Install"</p>
+                        </li>
+                    </ul>
+
+                    <h3>📋 Backup Schema</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 10.2: Open Windows Server Backup</strong>
+                            <p>1. Server Manager → "Tools" → "Windows Server Backup"</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 10.3: Maak Backup Schedule</strong>
+                            <p>1. Klik "Backup Schedule" in rechter paneel</p>
+                            <p>2. Kies "Custom"</p>
+                            <p>3. Selecteer te backuppen items:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>☑ Bare metal recovery</li>
+                                <li>☑ System state</li>
+                                <li>☑ Local disks</li>
+                            </ul>
+                            <p>4. Kies backup destination (external drive of network share)</p>
+                            <p>5. Stel schedule in (dagelijks/wekelijks)</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sectie 11: Certificate Services -->
+            <div class="section" id="section-11">
+                <div class="section-header" onclick="toggleSection(11)">
+                    <h2><span class="section-number">11</span> Certificate Services</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Stel een Certificate Authority in voor digitale certificaten.
+                        </div>
+                    </div>
+
+                    <h3>🔐 AD CS Installatie</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 11.1: Installeer AD CS</strong>
+                            <p>1. Server Manager → "Add Roles and Features"</p>
+                            <p>2. Selecteer "Active Directory Certificate Services"</p>
+                            <p>3. Kies role services:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>☑ Certification Authority</li>
+                                <li>☑ Certificate Enrollment Web Service</li>
+                                <li>☑ Certificate Enrollment Policy Web Service</li>
+                            </ul>
+                            <p>4. Klik "Install"</p>
+                        </li>
+                    </ul>
+
+                    <h3>⚙️ CA Configuratie</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 11.2: Configureer Certification Authority</strong>
+                            <p>1. Klik op het vlaggetje in Server Manager</p>
+                            <p>2. Klik "Configure Active Directory Certificate Services"</p>
+                            <p>3. Selecteer "Certification Authority"</p>
+                            <p>4. Kies "Enterprise CA"</p>
+                            <p>5. Stel CA type in: "Root CA"</p>
+                            <p>6. Configureer overige instellingen</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sectie 12: WSUS -->
+            <div class="section" id="section-12">
+                <div class="section-header" onclick="toggleSection(12)">
+                    <h2><span class="section-number">12</span> Windows Server Update Services</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Configureer WSUS voor gecentraliseerd patch management.
+                        </div>
+                    </div>
+
+                    <h3>🔄 WSUS Installatie</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 12.1: Installeer WSUS</strong>
+                            <p>1. Server Manager → "Add Roles and Features"</p>
+                            <p>2. Selecteer "Windows Server Update Services"</p>
+                            <p>3. Kies "WSUS Services" en "Database"</p>
+                            <p>4. Klik "Install"</p>
+                        </li>
+                    </ul>
+
+                    <h3>⚙️ WSUS Post-Installatie</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 12.2: Configureer WSUS</strong>
+                            <p>1. Open WSUS Admin Console</p>
+                            <p>2. Kies upstream server (Microsoft Update)</p>
+                            <p>3. Selecteer producten om te synchroniseren</p>
+                            <p>4. Kies classificaties (Critical Updates, Security Updates, etc.)</p>
+                            <p>5. Stel synchronisatie schedule in</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 12.3: Configureer Client Settings</strong>
+                            <p>1. Group Policy Management → Create new GPO</p>
+                            <p>2. Computer Configuration → Policies → Administrative Templates</p>
+                            <p>3. Windows Components → Windows Update</p>
+                            <p>4. Configure "Specify intranet Microsoft update service location"</p>
+                            <p>5. Voer WSUS server URL in</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sectie 13: Routing and Remote Access (RRAS) -->
+            <div class="section" id="section-13">
+                <div class="section-header" onclick="toggleSection(13)">
+                    <h2><span class="section-number">13</span> Routing and Remote Access (RRAS)</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Configureer VPN, NAT en routing voor externe connectiviteit.
+                        </div>
+                    </div>
+
+                    <h3>🌐 RRAS Installatie</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 13.1: Installeer RRAS Role</strong>
+                            <p>1. Server Manager → "Add Roles and Features"</p>
+                            <p>2. Selecteer "Remote Access"</p>
+                            <p>3. Kies "DirectAccess and VPN (RAS)"</p>
+                            <p>4. Selecteer "Routing"</p>
+                            <p>5. Klik "Install"</p>
+                        </li>
+                    </ul>
+
+                    <h3>🔒 VPN Server Configuratie</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 13.2: Configureer RRAS</strong>
+                            <p>1. Server Manager → "Tools" → "Routing and Remote Access"</p>
+                            <p>2. Rechtsklik op server → "Configure and Enable Routing and Remote Access"</p>
+                            <p>3. Kies "Custom configuration"</p>
+                            <p>4. Vink aan: "VPN access" en "NAT"</p>
+                            <p>5. Klik "Next" en "Finish"</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 13.3: Configureer VPN Properties</strong>
+                            <p>1. Rechtsklik op server → "Properties"</p>
+                            <p>2. Tab "Security" → Configureer authentication</p>
+                            <p>3. Tab "IPv4" → Enable IPv4 forwarding</p>
+                            <p>4. Configureer address assignment (DHCP/static pool)</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sectie 14: Network Policy Server (NPS) -->
+            <div class="section" id="section-14">
+                <div class="section-header" onclick="toggleSection(14)">
+                    <h2><span class="section-number">14</span> Network Policy Server (NPS)</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Configureer RADIUS server voor netwerk authenticatie en autorisatie.
+                        </div>
+                    </div>
+
+                    <h3>🔐 NPS Installatie</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 14.1: Installeer NPS</strong>
+                            <p>1. Server Manager → "Add Roles and Features"</p>
+                            <p>2. Selecteer "Network Policy and Access Services"</p>
+                            <p>3. Kies "Network Policy Server"</p>
+                            <p>4. Klik "Install"</p>
+                        </li>
+                    </ul>
+
+                    <h3>📋 RADIUS Client Configuratie</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 14.2: Configureer RADIUS Clients</strong>
+                            <p>1. Server Manager → "Tools" → "Network Policy Server"</p>
+                            <p>2. Vouw "RADIUS Clients and Servers" uit</p>
+                            <p>3. Rechtsklik "RADIUS Clients" → "New"</p>
+                            <p>4. Voer friendly name in</p>
+                            <p>5. IP address van de client (router/switch)</p>
+                            <p>6. Shared secret (sterk wachtwoord)</p>
+                        </li>
+                    </ul>
+
+                    <h3>📊 Network Policies</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 14.3: Maak Network Policy</strong>
+                            <p>1. Rechtsklik "Network Policies" → "New"</p>
+                            <p>2. Policy name: "VPN Access Policy"</p>
+                            <p>3. Type of network access server: "Remote Access Server (VPN-Dial up)"</p>
+                            <p>4. Conditions: User Groups, NAS Port Type</p>
+                            <p>5. Constraints: Authentication methods, Encryption</p>
+                            <p>6. Settings: Framed Protocol (PPP), Service-Type (Framed)</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sectie 15: DirectAccess -->
+            <div class="section" id="section-15">
+                <div class="section-header" onclick="toggleSection(15)">
+                    <h2><span class="section-number">15</span> DirectAccess</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Configureer DirectAccess voor seamless remote access zonder VPN.
+                        </div>
+                    </div>
+
+                    <h3>🚀 DirectAccess Prerequisites</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 15.1: Controleer Prerequisites</strong>
+                            <p>1. Active Directory Domain</p>
+                            <p>2. PKI Infrastructure (Certificate Services)</p>
+                            <p>3. Network Location Server (IIS website)</p>
+                            <p>4. Public IP address en DNS naam</p>
+                            <p>5. Windows 8/10/11 clients</p>
+                        </li>
+                    </ul>
+
+                    <h3>⚙️ DirectAccess Setup</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 15.2: Configureer Remote Access</strong>
+                            <p>1. Server Manager → "Tools" → "Remote Access Management"</p>
+                            <p>2. Klik "Run the Remote Access Setup Wizard"</p>
+                            <p>3. Kies "Deploy DirectAccess only"</p>
+                            <p>4. Configureer network topology</p>
+                            <p>5. Stel DirectAccess client GPO in</p>
+                            <p>6. Configureer DNS en IP-HTTPS</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sectie 16: Network Load Balancing -->
+            <div class="section" id="section-16">
+                <div class="section-header" onclick="toggleSection(16)">
+                    <h2><span class="section-number">16</span> Network Load Balancing</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Configureer NLB voor high availability en load distribution.
+                        </div>
+                    </div>
+
+                    <h3>⚖️ NLB Cluster Setup</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 16.1: Installeer NLB Feature</strong>
+                            <p>1. Server Manager → "Add Roles and Features"</p>
+                            <p>2. Selecteer "Network Load Balancing"</p>
+                            <p>3. Klik "Install"</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 16.2: Maak NLB Cluster</strong>
+                            <p>1. Server Manager → "Tools" → "Network Load Balancing Manager"</p>
+                            <p>2. Rechtsklik "Network Load Balancing Clusters" → "New Cluster"</p>
+                            <p>3. Voer host IP address in</p>
+                            <p>4. Configureer cluster IP address</p>
+                            <p>5. Kies cluster operation mode (Unicast/Multicast)</p>
+                            <p>6. Configureer port rules</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sectie 17: Performance Monitoring -->
+            <div class="section" id="section-17">
+                <div class="section-header" onclick="toggleSection(17)">
+                    <h2><span class="section-number">17</span> Performance Monitoring</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Configureer monitoring tools voor netwerk- en systeemprestaties.
+                        </div>
+                    </div>
+
+                    <h3>📊 Performance Monitor</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 17.1: Open Performance Monitor</strong>
+                            <p>1. Server Manager → "Tools" → "Performance Monitor"</p>
+                            <p>2. Klik "Performance Monitor" in linker paneel</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 17.2: Voeg Counters toe</strong>
+                            <p>1. Klik groene + knop</p>
+                            <p>2. Selecteer "Network Interface"</p>
+                            <p>3. Kies counters:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>Bytes Total/sec</li>
+                                <li>Current Bandwidth</li>
+                                <li>Packets/sec</li>
+                            </ul>
+                            <p>4. Selecteer netwerk adapter</p>
+                            <p>5. Klik "Add" en "OK"</p>
+                        </li>
+                    </ul>
+
+                    <h3>🔍 Resource Monitor</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 17.3: Open Resource Monitor</strong>
+                            <p>1. Start → "resmon.exe"</p>
+                            <p>2. Tab "Network" voor netwerk monitoring</p>
+                            <p>3. Bekijk TCP Connections, Listening Ports</p>
+                            <p>4. Monitor network utilization per process</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sectie 18: Windows Defender & Security -->
+            <div class="section" id="section-18">
+                <div class="section-header" onclick="toggleSection(18)">
+                    <h2><span class="section-number">18</span> Windows Defender & Security</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Configureer geavanceerde security features voor netwerkbeveiliging.
+                        </div>
+                    </div>
+
+                    <h3>🛡️ Windows Defender Antivirus</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 18.1: Open Windows Security</strong>
+                            <p>1. Start → "Windows Security"</p>
+                            <p>2. Klik "Virus & threat protection"</p>
+                            <p>3. Klik "Manage settings"</p>
+                            <p>4. Configureer real-time protection</p>
+                            <p>5. Stel cloud-delivered protection in</p>
+                        </li>
+                    </ul>
+
+                    <h3>🔥 Windows Firewall Advanced</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 18.2: Advanced Firewall Rules</strong>
+                            <p>1. Windows Security → "Firewall & network protection"</p>
+                            <p>2. Klik "Advanced settings"</p>
+                            <p>3. Rechtsklik "Inbound Rules" → "New Rule"</p>
+                            <p>4. Kies "Custom" voor geavanceerde regels</p>
+                            <p>5. Configureer protocol, ports, IP ranges</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Section toggling functionality
+        function toggleSection(sectionNumber) {
+            const section = document.getElementById(`section-${sectionNumber}`);
+            section.classList.toggle('active');
+        }
+
+        // Progress tracking
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const checked = document.querySelectorAll('input[type="checkbox"]:checked');
+            const progress = checkboxes.length > 0 ? (checked.length / checkboxes.length) * 100 : 0;
+
+            const progressBar = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+
+            if (progressBar) {
+                progressBar.style.width = progress + '%';
+            }
+
+            if (progressText) {
+                progressText.textContent = Math.round(progress) + '% Voltooid';
+            }
+        }
+
+        // Initialize progress on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(updateProgress, 100);
+        });
+    </script>
+
+    <!-- Copyright Notice -->
+    <footer style="text-align: center; padding: 20px; margin-top: auto; border-top: 1px solid #e0e0e0; color: #666; font-size: 0.9em; background: white;">
+        <p>&copy; 2025 Maes Jens. Alle rechten voorbehouden.</p>
+    </footer>
+</body>
+</html>
