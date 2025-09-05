@@ -479,6 +479,31 @@
             color: #e2e8f0;
         }
 
+        /* Mobile Table of Contents Toggle */
+        .mobile-toc-toggle {
+            display: none;
+            position: fixed;
+            top: 80px;
+            right: 15px;
+            background: linear-gradient(135deg, #008000, #00ff00);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: 0 4px 12px rgba(0, 128, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-toc-toggle:hover {
+            background: linear-gradient(135deg, #00ff00, #008000);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 128, 0, 0.4);
+        }
+
         /* Mobile responsiveness - Simplified approach */
         @media (max-width: 768px) {
             body {
@@ -490,6 +515,10 @@
                 margin: 70px auto 0 auto;
             }
 
+            .mobile-toc-toggle {
+                display: block;
+            }
+
             .sidebar {
                 width: 100%;
                 border-radius: 0;
@@ -497,6 +526,12 @@
                 border-bottom: 2px solid rgba(0,128,0,0.2);
                 position: static;
                 margin-bottom: 15px;
+                display: none;
+                transition: all 0.3s ease;
+            }
+
+            .sidebar.mobile-visible {
+                display: block;
             }
 
             .mobile-menu-toggle {
@@ -797,7 +832,8 @@
     </div>
 
     <div class="container">
-        <div class="sidebar">
+        <button class="mobile-toc-toggle" id="mobileTocToggle" title="Toggle Table of Contents">📋 Menu</button>
+        <div class="sidebar" id="sidebar">
             <h3>📋 Inhoudsopgave</h3>
             <ul class="toc-list">
                 <li><a href="#" onclick="toggleSection(1)">1. Hyper-V Lab Implementatie</a></li>
@@ -6060,6 +6096,16 @@ Criteria voor keuze:
                 behavior: 'smooth'
             });
         });
+
+        // Mobile Table of Contents Toggle functionality
+        const mobileTocToggle = document.getElementById('mobileTocToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        if (mobileTocToggle && sidebar) {
+            mobileTocToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('mobile-visible');
+            });
+        }
 
     </script>
 
