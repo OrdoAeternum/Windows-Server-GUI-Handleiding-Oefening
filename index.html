@@ -299,13 +299,44 @@
         #section-5 {
             width: 100% !important;
             max-width: 100% !important;
+            overflow-x: hidden !important;
         }
 
         #section-3 .section-content,
         #section-4 .section-content,
         #section-5 .section-content {
-            overflow-x: auto;
-            max-width: 100%;
+            overflow-x: hidden !important;
+            max-width: 100% !important;
+        }
+
+        /* Allow inner elements to scroll if needed */
+        #section-3 .section-content pre,
+        #section-4 .section-content pre,
+        #section-5 .section-content pre,
+        #section-3 .section-content table,
+        #section-4 .section-content table,
+        #section-5 .section-content table {
+            overflow-x: auto !important;
+            max-width: 100% !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Force all child elements in sections 3-5 to stay within bounds */
+        #section-3 .section-content *,
+        #section-4 .section-content *,
+        #section-5 .section-content * {
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Prevent any element from causing horizontal expansion */
+        #section-3 .section-content pre,
+        #section-4 .section-content pre,
+        #section-5 .section-content pre {
+            white-space: pre-wrap !important;
+            word-wrap: break-word !important;
+            overflow-wrap: break-word !important;
         }
 
         .section.active {
@@ -515,17 +546,19 @@
             color: white;
             border: none;
             border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            padding: 0;
+            width: 44px !important;
+            height: 44px !important;
+            padding: 0 !important;
             display: grid;
             place-items: center;
-            overflow: hidden;      /* clamp overflow */
+            overflow: hidden !important;      /* clamp overflow */
             text-indent: -9999px;  /* hide the word "Menu" visually */
             cursor: pointer;
             z-index: 1001;
             box-shadow: 0 4px 12px rgba(0, 128, 0, 0.3);
             transition: all 0.3s ease;
+            max-width: 44px !important;
+            min-width: 44px !important;
         }
 
         .mobile-toc-toggle::before {
@@ -614,6 +647,26 @@
                 border-radius: 8px;
             }
 
+            /* Extra constraints for sections 3-5 on mobile */
+            #section-3, #section-4, #section-5 {
+                width: 100vw !important;
+                max-width: 100vw !important;
+                margin-left: calc(-50vw + 50%) !important;
+                margin-right: calc(-50vw + 50%) !important;
+                overflow-x: hidden !important;
+            }
+
+            #section-3 .section-content,
+            #section-4 .section-content,
+            #section-5 .section-content {
+                width: 100% !important;
+                max-width: 100% !important;
+                overflow-x: hidden !important;
+                padding-left: 15px !important;
+                padding-right: 15px !important;
+                box-sizing: border-box !important;
+            }
+
             .section-header {
                 padding: 12px 15px;
             }
@@ -666,17 +719,6 @@
                 border-radius: 4px;
             }
 
-            /* 2) Sections 3–5 must NOT create horizontal scroll themselves */
-            #section-3, #section-4, #section-5 {
-                overflow-x: hidden !important; /* override earlier auto */
-            }
-
-            /* 3) Let only the truly wide children scroll horizontally */
-            #section-3 .section-content,
-            #section-4 .section-content,
-            #section-5 .section-content {
-                overflow-x: hidden; /* clamp content wrapper */
-            }
 
             /* Code blocks: horizontal scroll inside the block only */
             #section-3 .section-content pre,
@@ -1020,6 +1062,7 @@
         /* 3) If any copy of your CSS still has .section { max-width: 1000px; } */
         
         .section { max-width: 100% !important; }
+    </style>
     </style>
 </head>
 <body>
@@ -6242,6 +6285,21 @@ Criteria voor keuze:
                 // Close all others and open this one
                 allSections.forEach(s => s.classList.remove('active'));
                 section.classList.add('active');
+
+                // Force width constraints for sections 3-5 on mobile
+                if (window.innerWidth <= 768 && (sectionNumber === 3 || sectionNumber === 4 || sectionNumber === 5)) {
+                    setTimeout(() => {
+                        section.style.width = '100vw';
+                        section.style.maxWidth = '100vw';
+                        section.style.overflowX = 'hidden';
+                        const content = section.querySelector('.section-content');
+                        if (content) {
+                            content.style.width = '100%';
+                            content.style.maxWidth = '100%';
+                            content.style.overflowX = 'hidden';
+                        }
+                    }, 50);
+                }
             }
 
             // Small delay to ensure DOM updates before scrolling
