@@ -647,6 +647,8 @@
         .toc-dropdown.open .toc-dropdown-content {
             max-height: 400px;
             padding: 16px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .toc-dropdown-header {
@@ -692,10 +694,6 @@
             font-size: 13px;
             font-weight: 400;
             transition: color 0.2s ease;
-        }
-
-        .toc-dropdown-list a:hover {
-            /* color remains default */
         }
 
         /* Mobile responsiveness - Simplified approach */
@@ -749,6 +747,33 @@
                 padding: 15px;
                 box-sizing: border-box !important;
                 overflow-x: hidden;
+            }
+
+            /* Make ASCII diagrams scrollable on mobile */
+            .section-content pre {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                max-width: 100%;
+                white-space: pre;
+                word-wrap: normal;
+                font-size: 0.75em;
+                line-height: 1.2;
+            }
+
+            /* Resize info boxes and text for mobile */
+            .section-content .info-box {
+                padding: 8px;
+                font-size: 0.85em;
+            }
+
+            .section-content .info-box pre {
+                font-size: 0.7em;
+                line-height: 1.3;
+            }
+
+            .section-content .info-box p {
+                font-size: 0.85em;
+                margin-bottom: 6px;
             }
         }
 
@@ -900,11 +925,12 @@
 
             .section-content table {
                 font-size: 0.8em;
-                overflow-x: hidden;
-                display: block;
-                white-space: nowrap;
+                overflow-x: auto;
+                display: table;
+                white-space: normal;
                 max-width: 100%;
                 border-radius: 4px;
+                table-layout: auto;
             }
 
 
@@ -1130,11 +1156,12 @@
 
             .section-content table {
                 font-size: 0.8em;
-                overflow-x: hidden;
-                display: block;
-                white-space: nowrap;
+                overflow-x: auto;
+                display: table; /* Allow proper table layout */
+                white-space: normal; /* Allow text wrapping */
                 max-width: 100%;
                 border-radius: 4px;
+                table-layout: auto; /* Allow columns to adjust */
             }
 
 
@@ -1154,11 +1181,12 @@
             #section-3 .section-content table,
             #section-4 .section-content table,
             #section-5 .section-content table {
-                display: block;
+                display: table; /* Proper table display */
                 max-width: 100%;
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
-                white-space: normal; /* override any nowrap */
+                white-space: normal; /* Allow text wrapping */
+                table-layout: auto;
             }
 
             .section-content th,
@@ -1244,14 +1272,18 @@
             table {
                 font-size: 0.85em;
                 overflow-x: auto;
-                display: block;
-                white-space: nowrap;
+                display: table; /* Proper table display */
+                white-space: normal; /* Allow text wrapping */
                 border-radius: 6px;
+                table-layout: auto; /* Allow flexible column sizing */
+                width: 100%; /* Ensure full width utilization */
             }
 
             th, td {
                 padding: 6px 8px;
-                min-width: 100px;
+                min-width: 80px;
+                word-wrap: break-word;
+                white-space: normal;
             }
 
             th {
@@ -1525,7 +1557,7 @@
             max-width: 100% !important;
             overflow-x: hidden !important;
         }
-
+    
         #section-3 .info-box pre,
         #section-4 .info-box pre,
         #section-5 .info-box pre {
@@ -1592,6 +1624,10 @@
                     <li><a href="#section-34" onclick="toggleSection(34)">34. Capaciteitsplanning en baseline-metrics</a></li>
                     <li><a href="#section-35" onclick="toggleSection(35)">35. Back-upstrategie per rol</a></li>
                     <li><a href="#section-36" onclick="toggleSection(36)">36. RDS-licensing modus</a></li>
+                    <li><a href="#section-37" onclick="toggleSection(37)">37. Azure Arc Integration</a></li>
+                    <li><a href="#section-38" onclick="toggleSection(38)">38. Kubernetes op Windows Server</a></li>
+                    <li><a href="#section-39" onclick="toggleSection(39)">39. AI/ML Workloads</a></li>
+                    <li><a href="#section-40" onclick="toggleSection(40)">40. Modern Endpoint Management</a></li>
                 </ul>
             </div>
         </div>
@@ -1708,6 +1744,65 @@
                             <td>Netwerk</td>
                             <td>1x Gigabit NIC</td>
                             <td>2x Gigabit NIC</td>
+                        </tr>
+                        <tr>
+                            <td>BIOS/UEFI</td>
+                            <td>Virtualisatie ingeschakeld</td>
+                            <td>Secure Boot ingeschakeld</td>
+                        </tr>
+                        <tr>
+                            <td>Grafische Kaart</td>
+                            <td>DirectX 11 compatible</td>
+                            <td>Dedicated GPU voor zware workloads</td>
+                        </tr>
+                        <tr>
+                            <td>USB Poorten</td>
+                            <td>USB 2.0</td>
+                            <td>USB 3.0 of hoger</td>
+                        </tr>
+                        <tr>
+                            <td>Voeding</td>
+                            <td>300W PSU</td>
+                            <td>500W+ PSU met 80+ efficiency</td>
+                        </tr>
+                    </table>
+
+                    <h3>🖥️ Minimale Systeemvereisten voor Windows Server 2022 VMs</h3>
+                    <table>
+                        <tr>
+                            <th>Component</th>
+                            <th>Server Core</th>
+                            <th>Desktop Experience</th>
+                        </tr>
+                        <tr>
+                            <td>Processor</td>
+                            <td>1.4 GHz 64-bit</td>
+                            <td>1.4 GHz 64-bit</td>
+                        </tr>
+                        <tr>
+                            <td>RAM</td>
+                            <td>512 MB</td>
+                            <td>2 GB</td>
+                        </tr>
+                        <tr>
+                            <td>Opslag</td>
+                            <td>32 GB</td>
+                            <td>32 GB</td>
+                        </tr>
+                        <tr>
+                            <td>Netwerk</td>
+                            <td>1 Gbps Ethernet</td>
+                            <td>1 Gbps Ethernet</td>
+                        </tr>
+                        <tr>
+                            <td>Display</td>
+                            <td>N/A</td>
+                            <td>1024 x 768</td>
+                        </tr>
+                        <tr>
+                            <td>Input</td>
+                            <td>N/A</td>
+                            <td>Keyboard & Mouse</td>
                         </tr>
                     </table>
 
@@ -3146,58 +3241,274 @@ Set-VMMemory -VMName "HeavyWorkload01" -MaximumAmountPerNumaNodeBytes 4GB
                     </div>
 
                     <h3>🌐 IIS Installatie</h3>
-                    <ul class="steps-list">
-                        <li class="step-item">
-                            <input type="checkbox" onchange="updateProgress()">
-                            <strong>Stap 7.1: Installeer Web Server Role</strong>
-                            <p>1. Open Server Manager</p>
-                            <p>2. Klik "Manage" → "Add Roles and Features"</p>
-                            <p>3. Selecteer "Web Server (IIS)"</p>
-                            <p>4. Klik "Add Features" als gevraagd</p>
-                            <p>5. Kies gewenste IIS features:</p>
-                            <ul style="margin-left: 20px; margin-top: 10px;">
-                                <li>☑ Web Server</li>
-                                <li>☑ Common HTTP Features</li>
-                                <li>☑ Health and Diagnostics</li>
-                                <li>☑ Security</li>
-                                <li>☑ Application Development</li>
-                            </ul>
-                            <p>6. Klik "Next" en "Install"</p>
-                        </li>
-                    </ul>
+                     <ul class="steps-list">
+                         <li class="step-item">
+                             <input type="checkbox" onchange="updateProgress()">
+                             <strong>Stap 7.1: Installeer Web Server Role</strong>
+                             <p>1. Open Server Manager</p>
+                             <p>2. Klik "Manage" → "Add Roles and Features"</p>
+                             <p>3. Selecteer "Web Server (IIS)"</p>
+                             <p>4. Klik "Add Features" als gevraagd</p>
+                             <p>5. Kies gewenste IIS features:</p>
+                             <ul style="margin-left: 20px; margin-top: 10px;">
+                                 <li>☑ Web Server</li>
+                                 <li>☑ Common HTTP Features</li>
+                                 <li>☑ Health and Diagnostics</li>
+                                 <li>☑ Security</li>
+                                 <li>☑ Application Development</li>
+                                 <li>☑ Management Tools</li>
+                             </ul>
+                             <p>6. Klik "Next" en "Install"</p>
+                         </li>
+                     </ul>
 
-                    <h3>📄 Default Website Configuratie</h3>
-                    <ul class="steps-list">
-                        <li class="step-item">
-                            <input type="checkbox" onchange="updateProgress()">
-                            <strong>Stap 7.2: Open IIS Manager</strong>
-                            <p>1. Open Server Manager</p>
-                            <p>2. Klik "Tools" → "Internet Information Services (IIS) Manager"</p>
-                        </li>
+                     <h3>⚙️ Geavanceerde IIS Configuratie</h3>
+                     <ul class="steps-list">
+                         <li class="step-item">
+                             <input type="checkbox" onchange="updateProgress()">
+                             <strong>Stap 7.2: IIS Manager Openen</strong>
+                             <p>1. Server Manager → "Tools" → "Internet Information Services (IIS) Manager"</p>
+                             <p>2. Vouw server uit in linker paneel</p>
+                             <p>3. Klik op "Sites" → "Default Web Site"</p>
+                         </li>
 
-                        <li class="step-item">
-                            <input type="checkbox" onchange="updateProgress()">
-                            <strong>Stap 7.3: Configureer Default Website</strong>
-                            <p>1. Vouw server uit in linker paneel</p>
-                            <p>2. Klik op "Sites" → "Default Web Site"</p>
-                            <p>3. Rechtsklik → "Manage Website" → "Browse"</p>
-                            <p>4. Controleer of IIS startpagina zichtbaar is</p>
-                        </li>
-                    </ul>
+                         <li class="step-item">
+                             <input type="checkbox" onchange="updateProgress()">
+                             <strong>Stap 7.3: Website Binding Configureren</strong>
+                             <p>1. Rechtsklik op "Default Web Site" → "Edit Bindings"</p>
+                             <p>2. Klik "Add" voor nieuwe binding</p>
+                             <p>3. Type: http, IP address: All Unassigned, Port: 80</p>
+                             <p>4. Host name: (leeg voor default)</p>
+                             <p>5. Klik OK</p>
+                         </li>
 
+                         <li class="step-item">
+                             <input type="checkbox" onchange="updateProgress()">
+                             <strong>Stap 7.4: MIME Types Configureren</strong>
+                             <p>1. Selecteer website → "MIME Types"</p>
+                             <p>2. Klik "Add" voor custom types:</p>
+                             <ul style="margin-left: 20px; margin-top: 10px;">
+                                 <li>.json → application/json</li>
+                                 <li>.woff → application/font-woff</li>
+                                 <li>.woff2 → application/font-woff2</li>
+                             </ul>
+                         </li>
+                     </ul>
 
-                    <h3>📚 Aanvullende Bronnen</h3>
-                    <div class="info-box">
-                        <span class="info-icon">📖</span>
-                        <div>
-                            <strong>Microsoft Documentatie Links:</strong>
-                            <ul style="margin-top: 10px;">
-                                <li><a href="https://docs.microsoft.com/en-us/iis/get-started/introduction-to-iis/iis-web-server-overview" target="_blank" style="color: #00ff00;">IIS Web Server Overzicht</a></li>
-                                <li><a href="https://docs.microsoft.com/en-us/iis/configuration/system.webserver/security/" target="_blank" style="color: #00ff00;">IIS Beveiligingsconfiguratie</a></li>
-                                <li><a href="https://docs.microsoft.com/en-us/iis/manage/configuring-security/" target="_blank" style="color: #00ff00;">IIS Beveiliging Configureren</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                     <h3>🔒 SSL/TLS Setup</h3>
+                     <ul class="steps-list">
+                         <li class="step-item">
+                             <input type="checkbox" onchange="updateProgress()">
+                             <strong>Stap 7.5: SSL Certificaat Installeren</strong>
+                             <p>1. IIS Manager → Server naam → "Server Certificates"</p>
+                             <p>2. Klik "Import" voor bestaand certificaat</p>
+                             <p>3. Of "Create Certificate Request" voor nieuw certificaat</p>
+                             <p>4. Selecteer .pfx bestand en voer wachtwoord in</p>
+                         </li>
+
+                         <li class="step-item">
+                             <input type="checkbox" onchange="updateProgress()">
+                             <strong>Stap 7.6: HTTPS Binding Toevoegen</strong>
+                             <p>1. Rechtsklik website → "Edit Bindings"</p>
+                             <p>2. Klik "Add"</p>
+                             <p>3. Type: https, Port: 443</p>
+                             <p>4. Selecteer SSL certificaat</p>
+                             <p>5. Klik OK</p>
+                         </li>
+
+                         <li class="step-item">
+                             <input type="checkbox" onchange="updateProgress()">
+                             <strong>Stap 7.7: SSL Settings Configureren</strong>
+                             <p>1. Selecteer website → "SSL Settings"</p>
+                             <p>2. Vink aan: "Require SSL"</p>
+                             <p>3. Kies "Accept" voor client certificates indien nodig</p>
+                         </li>
+                     </ul>
+
+                     <h3>🛡️ Security Hardening</h3>
+                     <ul class="steps-list">
+                         <li class="step-item">
+                             <input type="checkbox" onchange="updateProgress()">
+                             <strong>Stap 7.8: Request Filtering</strong>
+                             <p>1. Website → "Request Filtering"</p>
+                             <p>2. Configureer file extensions:</p>
+                             <ul style="margin-left: 20px; margin-top: 10px;">
+                                 <li>Blokkeer: .asp, .exe, .bat</li>
+                                 <li>Toestaan: .html, .css, .js, .jpg</li>
+                             </ul>
+                             <p>3. Stel URL lengte limits in</p>
+                         </li>
+
+                         <li class="step-item">
+                             <input type="checkbox" onchange="updateProgress()">
+                             <strong>Stap 7.9: Directory Browsing Uitschakelen</strong>
+                             <p>1. Website → "Directory Browsing"</p>
+                             <p>2. Zorg dat dit uitgeschakeld is</p>
+                         </li>
+
+                         <li class="step-item">
+                             <input type="checkbox" onchange="updateProgress()">
+                             <strong>Stap 7.10: Default Documents Configureren</strong>
+                             <p>1. Website → "Default Document"</p>
+                             <p>2. Stel volgorde in: index.html, index.htm, default.aspx</p>
+                         </li>
+                     </ul>
+
+                     <h3>🏊 Application Pools</h3>
+                     <ul class="steps-list">
+                         <li class="step-item">
+                             <input type="checkbox" onchange="updateProgress()">
+                             <strong>Stap 7.11: Application Pool Aanmaken</strong>
+                             <p>1. IIS Manager → "Application Pools"</p>
+                             <p>2. Rechtsklik → "Add Application Pool"</p>
+                             <p>3. Naam: "MyAppPool"</p>
+                             <p>4. .NET CLR Version: v4.0</p>
+                             <p>5. Process Model: ApplicationPoolIdentity</p>
+                         </li>
+
+                         <li class="step-item">
+                             <input type="checkbox" onchange="updateProgress()">
+                             <strong>Stap 7.12: Application Pool Settings</strong>
+                             <p>1. Rechtsklik Application Pool → "Advanced Settings"</p>
+                             <p>2. Process Model:</p>
+                             <ul style="margin-left: 20px; margin-top: 10px;">
+                                 <li>Idle Time-out: 20 minutes</li>
+                                 <li>Maximum Worker Processes: 1</li>
+                             </ul>
+                             <p>3. Recycling:</p>
+                             <ul style="margin-left: 20px; margin-top: 10px;">
+                                 <li>Regular time interval: 1740 minutes</li>
+                                 <li>Private memory usage: 500MB</li>
+                             </ul>
+                         </li>
+                     </ul>
+
+                     <h3>🔄 URL Rewrite en Redirects</h3>
+                     <ul class="steps-list">
+                         <li class="step-item">
+                             <input type="checkbox" onchange="updateProgress()">
+                             <strong>Stap 7.13: URL Rewrite Module Installeren</strong>
+                             <p>1. Download URL Rewrite module van Microsoft</p>
+                             <p>2. Installeer via Web Platform Installer</p>
+                             <p>3. Of via PowerShell: <code>Install-WindowsFeature Web-Url-Auth</code></p>
+                         </li>
+
+                         <li class="step-item">
+                             <input type="checkbox" onchange="updateProgress()">
+                             <strong>Stap 7.14: Rewrite Rules Aanmaken</strong>
+                             <p>1. Website → "URL Rewrite"</p>
+                             <p>2. Klik "Add Rule" → "Blank Rule"</p>
+                             <p>3. Pattern: ^(.*)$</p>
+                             <p>4. Rewrite URL: {R:1}</p>
+                             <p>5. Conditions: HTTP to HTTPS redirect</p>
+                         </li>
+                     </ul>
+
+                     <h3>⚡ Performance Optimization</h3>
+                     <ul class="steps-list">
+                         <li class="step-item">
+                             <input type="checkbox" onchange="updateProgress()">
+                             <strong>Stap 7.15: Compression Inschakelen</strong>
+                             <p>1. Server level → "Compression"</p>
+                             <p>2. Vink aan: "Enable dynamic content compression"</p>
+                             <p>3. Vink aan: "Enable static content compression"</p>
+                             <p>4. MIME types: text/*, application/javascript</p>
+                         </li>
+
+                         <li class="step-item">
+                             <input type="checkbox" onchange="updateProgress()">
+                             <strong>Stap 7.16: Output Caching Configureren</strong>
+                             <p>1. Website → "Output Caching"</p>
+                             <p>2. Klik "Add" voor cache rules:</p>
+                             <ul style="margin-left: 20px; margin-top: 10px;">
+                                 <li>Extension: .css, Kernel cache enabled</li>
+                                 <li>Extension: .js, Kernel cache enabled</li>
+                                 <li>Extension: .png, User-mode cache</li>
+                             </ul>
+                         </li>
+
+                         <li class="step-item">
+                             <input type="checkbox" onchange="updateProgress()">
+                             <strong>Stap 7.17: Connection Limits Instellen</strong>
+                             <p>1. Website → "Advanced Settings"</p>
+                             <p>2. Limits:</p>
+                             <ul style="margin-left: 20px; margin-top: 10px;">
+                                 <li>Connection Time-out: 120 seconds</li>
+                                 <li>Maximum concurrent connections: 1000</li>
+                             </ul>
+                         </li>
+                     </ul>
+
+                     <h3>📊 Monitoring en Logging</h3>
+                     <ul class="steps-list">
+                         <li class="step-item">
+                             <input type="checkbox" onchange="updateProgress()">
+                             <strong>Stap 7.18: Logging Configureren</strong>
+                             <p>1. Website → "Logging"</p>
+                             <p>2. Log file format: W3C</p>
+                             <p>3. Log file directory: C:\inetpub\logs\LogFiles</p>
+                             <p>4. Fields: Date, Time, Client IP, Method, URI, Status</p>
+                         </li>
+
+                         <li class="step-item">
+                             <input type="checkbox" onchange="updateProgress()">
+                             <strong>Stap 7.19: Failed Request Tracing</strong>
+                             <p>1. Website → "Failed Request Tracing Rules"</p>
+                             <p>2. Klik "Add" voor nieuwe rule</p>
+                             <p>3. Status codes: 400-599</p>
+                             <p>4. Providers: ASP, ISAPI, WWW Server</p>
+                         </li>
+                     </ul>
+
+                     <h3>🔧 Troubleshooting IIS</h3>
+                     <table>
+                         <tr>
+                             <th>Probleem</th>
+                             <th>Symptoom</th>
+                             <th>Oplossing</th>
+                         </tr>
+                         <tr>
+                             <td><strong>HTTP 500 Error</strong></td>
+                             <td>Internal Server Error</td>
+                             <td>Controleer application pool status, event logs, web.config syntax</td>
+                         </tr>
+                         <tr>
+                             <td><strong>HTTP 404 Error</strong></td>
+                             <td>Page Not Found</td>
+                             <td>Controleer file permissions, default documents, virtual directory paths</td>
+                         </tr>
+                         <tr>
+                             <td><strong>HTTP 403 Error</strong></td>
+                             <td>Forbidden Access</td>
+                             <td>Controleer NTFS permissions, authentication settings</td>
+                         </tr>
+                         <tr>
+                             <td><strong>Slow Performance</strong></td>
+                             <td>Website traag</td>
+                             <td>Controleer application pool recycling, compression, caching settings</td>
+                         </tr>
+                         <tr>
+                             <td><strong>SSL Certificate Error</strong></td>
+                             <td>Certificate warnings</td>
+                             <td>Controleer certificate validity, binding configuration, trust chain</td>
+                         </tr>
+                     </table>
+
+                     <h3>📚 Aanvullende Bronnen</h3>
+                     <div class="info-box">
+                         <span class="info-icon">📖</span>
+                         <div>
+                             <strong>Microsoft Documentatie Links:</strong>
+                             <ul style="margin-top: 10px;">
+                                 <li><a href="https://docs.microsoft.com/en-us/iis/get-started/introduction-to-iis/iis-web-server-overview" target="_blank" style="color: #00ff00;">IIS Web Server Overzicht</a></li>
+                                 <li><a href="https://docs.microsoft.com/en-us/iis/configuration/system.webserver/security/" target="_blank" style="color: #00ff00;">IIS Beveiligingsconfiguratie</a></li>
+                                 <li><a href="https://docs.microsoft.com/en-us/iis/manage/configuring-security/" target="_blank" style="color: #00ff00;">IIS Beveiliging Configureren</a></li>
+                                 <li><a href="https://docs.microsoft.com/en-us/iis/configuration/" target="_blank" style="color: #00ff00;">IIS Configuration Reference</a></li>
+                                 <li><a href="https://docs.microsoft.com/en-us/iis/extensions/url-rewrite-module/" target="_blank" style="color: #00ff00;">URL Rewrite Module</a></li>
+                                 <li><a href="https://docs.microsoft.com/en-us/iis/manage/performance-settings/" target="_blank" style="color: #00ff00;">IIS Performance Tuning</a></li>
+                             </ul>
+                         </div>
+                     </div>
 
                 </div>
             </div>
@@ -3237,7 +3548,7 @@ Set-VMMemory -VMName "HeavyWorkload01" -MaximumAmountPerNumaNodeBytes 4GB
                             <p>1. Server Manager → "Add Roles and Features"</p>
                             <p>2. Selecteer "File and Storage Services"</p>
                             <p>3. Vink aan: "File and iSCSI Services"</p>
-                            <p>4. Kies: "File Server" en "DFS Namespaces"</p>
+                            <p>4. Kies: "File Server", "DFS Namespaces", "DFS Replication"</p>
                             <p>5. Klik "Install"</p>
                         </li>
                     </ul>
@@ -3265,15 +3576,215 @@ Set-VMMemory -VMName "HeavyWorkload01" -MaximumAmountPerNumaNodeBytes 4GB
                         </li>
                     </ul>
 
+                    <h3>🔐 NTFS en Share Permissions</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 8.4: NTFS Permissions Configureren</strong>
+                            <p>1. Rechtsklik folder → "Properties" → "Security"</p>
+                            <p>2. Klik "Advanced" voor geavanceerde permissions</p>
+                            <p>3. Configureer:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>Domain Admins: Full Control</li>
+                                <li>Domain Users: Modify</li>
+                                <li>Authenticated Users: Read & Execute</li>
+                            </ul>
+                            <p>4. Vink aan: "Replace all child object permissions"</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 8.5: Share Permissions Instellen</strong>
+                            <p>1. Rechtsklik folder → "Properties" → "Sharing"</p>
+                            <p>2. Klik "Advanced Sharing" → "Permissions"</p>
+                            <p>3. Stel share permissions in:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>Everyone: Read</li>
+                                <li>Domain Admins: Full Control</li>
+                            </ul>
+                            <p>4. Effectieve permissions = NTFS ∩ Share permissions</p>
+                        </li>
+                    </ul>
+
+                    <h3>🔄 DFS Replication</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 8.6: Replication Group Aanmaken</strong>
+                            <p>1. DFS Management → "Replication"</p>
+                            <p>2. Rechtsklik → "New Replication Group"</p>
+                            <p>3. Type: Multipurpose replication group</p>
+                            <p>4. Naam: "LabReplication"</p>
+                            <p>5. Selecteer 2+ servers voor replicatie</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 8.7: Replicated Folder Toevoegen</strong>
+                            <p>1. Klik "Add" bij Replicated Folders</p>
+                            <p>2. Naam: "SharedDocs"</p>
+                            <p>3. Lokale paden: C:\DFSRoot\SharedDocs</p>
+                            <p>4. Memberships: Beide servers selecteren</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 8.8: Replication Schedule Configureren</strong>
+                            <p>1. Selecteer replication group → "Connections"</p>
+                            <p>2. Rechtsklik connection → "Properties"</p>
+                            <p>3. Schedule: "Replicate continuously"</p>
+                            <p>4. Bandwidth: "Full bandwidth"</p>
+                            <p>5. Of configureer custom schedule</p>
+                        </li>
+                    </ul>
+
+                    <h3>📊 Storage Quotas</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 8.9: File Server Resource Manager Installeren</strong>
+                            <p>1. Server Manager → "Add Roles and Features"</p>
+                            <p>2. Selecteer "File Server Resource Manager"</p>
+                            <p>3. Klik "Install"</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 8.10: Quota Template Aanmaken</strong>
+                            <p>1. Server Manager → "Tools" → "File Server Resource Manager"</p>
+                            <p>2. Rechtsklik "Quota Templates" → "Create Quota Template"</p>
+                            <p>3. Template name: "User Quota 1GB"</p>
+                            <p>4. Space limit: 1 GB</p>
+                            <p>5. Configureer warning levels</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 8.11: Quota Toepassen op Folder</strong>
+                            <p>1. Rechtsklik "Quotas" → "Create Quota"</p>
+                            <p>2. Selecteer folder pad</p>
+                            <p>3. Kies template of custom settings</p>
+                            <p>4. Vink aan: "Auto apply template and create quotas on existing and new subfolders"</p>
+                        </li>
+                    </ul>
+
+                    <h3>🛡️ File Screening</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 8.12: File Screen Template Aanmaken</strong>
+                            <p>1. File Server Resource Manager → "File Screening Management"</p>
+                            <p>2. Rechtsklik "File Screen Templates" → "Create File Screen Template"</p>
+                            <p>3. Template name: "Block Executables"</p>
+                            <p>4. File groups: Executable files</p>
+                            <p>5. Active screening: Block</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 8.13: File Screen Toepassen</strong>
+                            <p>1. Rechtsklik "File Screens" → "Create File Screen"</p>
+                            <p>2. Selecteer folder pad</p>
+                            <p>3. Kies template</p>
+                            <p>4. Configureer exceptions indien nodig</p>
+                        </li>
+                    </ul>
+
+                    <h3>🌐 BranchCache</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 8.14: BranchCache Inschakelen</strong>
+                            <p>1. Server Manager → "Add Roles and Features"</p>
+                            <p>2. Selecteer "BranchCache"</p>
+                            <p>3. Kies "Hosted Cache" mode</p>
+                            <p>4. Klik "Install"</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 8.15: BranchCache Configureren</strong>
+                            <p>1. PowerShell: <code>Enable-BCHostedServer -RegisterSCP</code></p>
+                            <p>2. Stel cache size in: <code>Set-BCCache -SizeBytes 10GB</code></p>
+                            <p>3. Configureer firewall rules voor BranchCache</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 8.16: Client BranchCache Inschakelen</strong>
+                            <p>1. Group Policy → Computer Configuration</p>
+                            <p>2. Policies → Administrative Templates → Network → BranchCache</p>
+                            <p>3. Enable "Turn on BranchCache"</p>
+                            <p>4. Set "Set BranchCache Hosted Cache mode"</p>
+                        </li>
+                    </ul>
+
+                    <h3>🔍 File Services Monitoring</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 8.17: File Share Auditing Inschakelen</strong>
+                            <p>1. Group Policy → Computer Configuration</p>
+                            <p>2. Policies → Windows Settings → Security Settings</p>
+                            <p>3. Local Policies → Audit Policy</p>
+                            <p>4. Enable: "Audit object access"</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 8.18: Folder Auditing Configureren</strong>
+                            <p>1. Rechtsklik folder → "Properties" → "Security" → "Advanced"</p>
+                            <p>2. Auditing tab → "Add"</p>
+                            <p>3. Selecteer users/groups</p>
+                            <p>4. Audit events: Create, Delete, Modify</p>
+                        </li>
+                    </ul>
+
+                    <h3>🚨 Troubleshooting File Services</h3>
+                    <table>
+                        <tr>
+                            <th>Probleem</th>
+                            <th>Symptoom</th>
+                            <th>Oplossing</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Access Denied</strong></td>
+                            <td>Gebruiker kan niet toegang krijgen tot share</td>
+                            <td>Controleer NTFS en share permissions, user group membership</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DFS Replication Fails</strong></td>
+                            <td>Files worden niet gerepliceerd</td>
+                            <td>Controleer network connectivity, DFS Replication service, event logs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Slow File Access</strong></td>
+                            <td>Bestanden openen traag</td>
+                            <td>Controleer disk I/O, network latency, antivirus exclusions</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Quota Not Working</strong></td>
+                            <td>Storage quotas worden niet enforced</td>
+                            <td>Controleer FSRM service status, quota configuration, disk space</td>
+                        </tr>
+                        <tr>
+                            <td><strong>BranchCache Issues</strong></td>
+                            <td>Cached content niet beschikbaar</td>
+                            <td>Controleer BranchCache service, firewall rules, client configuration</td>
+                        </tr>
+                    </table>
+
                     <h3>📚 Aanvullende Bronnen</h3>
                     <div class="info-box">
                         <span class="info-icon">📖</span>
                         <div>
                             <strong>Microsoft Documentatie Links:</strong>
                             <ul style="margin-top: 10px;">
-                                <li><a href="https://docs.microsoft.com/en-us/windows-server/storage/windows-server-backup/windows-server-backup-overview" target="_blank" style="color: #00ff00;">Windows Server Backup Overzicht</a></li>
-                                <li><a href="https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/manage/choose-between-standard-or-production-checkpoints-in-hyper-v" target="_blank" style="color: #00ff00;">Hyper-V Checkpoints (Snapshots)</a></li>
-                                <li><a href="https://docs.microsoft.com/en-us/windows-server/storage/windows-server-backup/backup-and-restore" target="_blank" style="color: #00ff00;">Backup en Restore Procedures</a></li>
+                                <li><a href="https://docs.microsoft.com/en-us/windows-server/storage/file-server/file-server-overview" target="_blank" style="color: #00ff00;">File Server Overzicht</a></li>
+                                <li><a href="https://docs.microsoft.com/en-us/windows-server/storage/dfs-namespaces/dfs-overview" target="_blank" style="color: #00ff00;">DFS Namespaces</a></li>
+                                <li><a href="https://docs.microsoft.com/en-us/windows-server/storage/dfs-replication/dfsr-overview" target="_blank" style="color: #00ff00;">DFS Replication</a></li>
+                                <li><a href="https://docs.microsoft.com/en-us/windows-server/storage/fsrm/fsrm-overview" target="_blank" style="color: #00ff00;">File Server Resource Manager</a></li>
+                                <li><a href="https://docs.microsoft.com/en-us/windows-server/networking/branchcache/branchcache" target="_blank" style="color: #00ff00;">BranchCache</a></li>
                             </ul>
                         </div>
                     </div>
@@ -3308,6 +3819,21 @@ Set-VMMemory -VMName "HeavyWorkload01" -MaximumAmountPerNumaNodeBytes 4GB
                         </div>
                     </div>
 
+                    <h3>🏗️ RDS Architectuur Overzicht</h3>
+                    <div class="info-box">
+                        <span class="info-icon">📊</span>
+                        <div>
+                            <strong>RDS Componenten:</strong>
+                            <ul style="margin-top: 10px;">
+                                <li><strong>RD Connection Broker:</strong> Load balancing en session reconnection</li>
+                                <li><strong>RD Web Access:</strong> Web-based toegang tot RemoteApps en desktops</li>
+                                <li><strong>RD Session Host:</strong> Servers die sessies hosten</li>
+                                <li><strong>RD Gateway:</strong> Veilige externe toegang via HTTPS</li>
+                                <li><strong>RD Licensing:</strong> CAL management en compliance</li>
+                            </ul>
+                        </div>
+                    </div>
+
                     <h3>🖥️ RDS Installatie</h3>
                     <ul class="steps-list">
                         <li class="step-item">
@@ -3315,9 +3841,109 @@ Set-VMMemory -VMName "HeavyWorkload01" -MaximumAmountPerNumaNodeBytes 4GB
                             <strong>Stap 9.1: Installeer RDS Role</strong>
                             <p>1. Server Manager → "Add Roles and Features"</p>
                             <p>2. Selecteer "Remote Desktop Services"</p>
-                            <p>3. Kies deployment type: "Quick Start"</p>
-                            <p>4. Selecteer: RD Connection Broker, RD Web Access, RD Session Host</p>
+                            <p>3. Kies deployment type: "Standard deployment"</p>
+                            <p>4. Selecteer gewenste role services</p>
                             <p>5. Klik "Install"</p>
+                        </li>
+                    </ul>
+
+                    <h3>🔗 RD Connection Broker</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 9.2: Configureer Connection Broker</strong>
+                            <p>1. Server Manager → "Remote Desktop Services" → "Collections"</p>
+                            <p>2. Klik "Create Session Collection"</p>
+                            <p>3. Naam: "Lab Collection"</p>
+                            <p>4. Add RD Session Host servers</p>
+                            <p>5. Configureer user groups</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 9.3: High Availability Configureren</strong>
+                            <p>1. Deploy multiple Connection Brokers</p>
+                            <p>2. Configureer database voor session storage</p>
+                            <p>3. Stel failover in voor redundancy</p>
+                        </li>
+                    </ul>
+
+                    <h3>🌐 RD Web Access</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 9.4: RD Web Access Configureren</strong>
+                            <p>1. Open RD Web Access site: https://server/RDWeb</p>
+                            <p>2. Klik "Connect to a remote PC" of "RemoteApp programs"</p>
+                            <p>3. Configureer SSL certificaat voor HTTPS</p>
+                            <p>4. Stel authentication method in</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 9.5: RemoteApp Programs Publiceren</strong>
+                            <p>1. Server Manager → "Remote Desktop Services" → "Collections"</p>
+                            <p>2. Selecteer collection → "RemoteApp Programs"</p>
+                            <p>3. Klik "Add RemoteApp Programs"</p>
+                            <p>4. Selecteer applicaties om te publiceren</p>
+                            <p>5. Configureer program properties</p>
+                        </li>
+                    </ul>
+
+                    <h3>🖥️ RD Session Host</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 9.6: Session Host Settings Configureren</strong>
+                            <p>1. Server Manager → "Tools" → "Remote Desktop Services" → "Remote Desktop Session Host Configuration"</p>
+                            <p>2. Configureer connection settings:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>Security layer: SSL</li>
+                                <li>Encryption level: High</li>
+                                <li>Authentication: Required</li>
+                            </ul>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 9.7: Session Time Limits Instellen</strong>
+                            <p>1. Group Policy → Computer Configuration</p>
+                            <p>2. Policies → Administrative Templates → Windows Components → Remote Desktop Services</p>
+                            <p>3. Configureer:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>Set time limit for active sessions</li>
+                                <li>Set time limit for disconnected sessions</li>
+                                <li>Terminate session when time limits are reached</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h3>🚪 RD Gateway</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 9.8: RD Gateway Installeren</strong>
+                            <p>1. Server Manager → "Add Roles and Features"</p>
+                            <p>2. Selecteer "Remote Desktop Services" → "RD Gateway"</p>
+                            <p>3. Klik "Install"</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 9.9: RD Gateway Configureren</strong>
+                            <p>1. Server Manager → "Tools" → "Remote Desktop Gateway Manager"</p>
+                            <p>2. Configureer SSL certificaat</p>
+                            <p>3. Stel CAP (Connection Authorization Policies) in</p>
+                            <p>4. Configureer RAP (Resource Authorization Policies)</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 9.10: Network Policies Configureren</strong>
+                            <p>1. Open NPS console</p>
+                            <p>2. Maak Network Policy voor RD Gateway</p>
+                            <p>3. Configureer conditions en constraints</p>
+                            <p>4. Stel authentication methods in</p>
                         </li>
                     </ul>
 
@@ -3325,13 +3951,134 @@ Set-VMMemory -VMName "HeavyWorkload01" -MaximumAmountPerNumaNodeBytes 4GB
                     <ul class="steps-list">
                         <li class="step-item">
                             <input type="checkbox" onchange="updateProgress()">
-                            <strong>Stap 9.2: Configureer RDS Licensing</strong>
+                            <strong>Stap 9.11: Configureer RDS Licensing</strong>
                             <p>1. Server Manager → "Tools" → "Remote Desktop Services" → "RD Licensing Manager"</p>
                             <p>2. Rechtsklik op server → "Activate Server"</p>
                             <p>3. Kies "Automatic connection" of voer licentiesleutel in</p>
                             <p>4. Configureer license server</p>
                         </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 9.12: License Types Configureren</strong>
+                            <p>1. Rechtsklik license server → "Properties"</p>
+                            <p>2. Configureer license type:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>Per User: Voor roaming users</li>
+                                <li>Per Device: Voor dedicated workstations</li>
+                            </ul>
+                            <p>3. Stel license server discovery in</p>
+                        </li>
                     </ul>
+
+                    <h3>⚙️ Session Configuration</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 9.13: Remote Desktop Session Host Settings</strong>
+                            <p>1. Server Manager → "Tools" → "Remote Desktop Session Host Configuration"</p>
+                            <p>2. Configureer RDP-Tcp properties:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>Security: SSL (TLS 1.0)</li>
+                                <li>Encryption: High</li>
+                                <li>Authentication: Required</li>
+                            </ul>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 9.14: User Profile Disks</strong>
+                            <p>1. Collection properties → "User Profile Disks"</p>
+                            <p>2. Enable User Profile Disks</p>
+                            <p>3. Stel UNC pad in: \\server\share</p>
+                            <p>4. Configureer disk size limits</p>
+                        </li>
+                    </ul>
+
+                    <h3>🛡️ RDS Security Hardening</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 9.15: Network Level Authentication Inschakelen</strong>
+                            <p>1. Group Policy → Computer Configuration</p>
+                            <p>2. Policies → Administrative Templates → Windows Components → Remote Desktop Services</p>
+                            <p>3. Enable "Require user authentication for remote connections by using Network Level Authentication"</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 9.16: Restrictie van Poorten en Protocollen</strong>
+                            <p>1. Firewall rules voor RDP (3389)</p>
+                            <p>2. SSL/TLS configuratie voor encryptie</p>
+                            <p>3. Disable insecure protocols (RDP 6.0 or lower)</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 9.17: Multi-Factor Authentication</strong>
+                            <p>1. Azure AD integration voor MFA</p>
+                            <p>2. RADIUS authentication voor third-party MFA</p>
+                            <p>3. Certificate-based authentication</p>
+                        </li>
+                    </ul>
+
+                    <h3>📊 RDS Monitoring</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 9.18: Performance Counters</strong>
+                            <p>1. Performance Monitor → Add Counters</p>
+                            <p>2. RDS counters:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>Active Sessions</li>
+                                <li>Total Sessions</li>
+                                <li>CPU Usage per Session</li>
+                                <li>Memory Usage per Session</li>
+                            </ul>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 9.19: Event Logging</strong>
+                            <p>1. Event Viewer → Applications and Services Logs</p>
+                            <p>2. Microsoft → Windows → RemoteDesktopServices</p>
+                            <p>3. Configureer alerts voor critical events</p>
+                        </li>
+                    </ul>
+
+                    <h3>🚨 RDS Troubleshooting</h3>
+                    <table>
+                        <tr>
+                            <th>Probleem</th>
+                            <th>Symptoom</th>
+                            <th>Oplossing</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Connection Failed</strong></td>
+                            <td>Kan geen verbinding maken met RDS</td>
+                            <td>Controleer firewall, poort 3389, NLA settings</td>
+                        </tr>
+                        <tr>
+                            <td><strong>License Error</strong></td>
+                            <td>Licensing fout bij connectie</td>
+                            <td>Controleer RD Licensing server, CAL availability</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Slow Performance</strong></td>
+                            <td>Trage RDS sessie</td>
+                            <td>Controleer network latency, server resources, display settings</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Authentication Failed</strong></td>
+                            <td>Inloggen mislukt</td>
+                            <td>Controleer domain connectivity, user credentials, MFA settings</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Application Not Available</strong></td>
+                            <td>RemoteApp niet zichtbaar</td>
+                            <td>Controleer RD Web Access, collection configuration</td>
+                        </tr>
+                    </table>
 
                 </div>
             </div>
@@ -6779,6 +7526,415 @@ Criteria voor keuze:
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Sectie 37: Azure Arc Integration -->
+            <div class="section" id="section-37">
+                <div class="section-header" onclick="toggleSection(37)">
+                    <h2><span class="section-number">37</span> Azure Arc Integration</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Integreer on-premises Windows Server met Azure Arc voor gecentraliseerd beheer en monitoring.
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <span class="info-icon">📋</span>
+                        <div>
+                            <strong>Benodigde infrastructuur:</strong>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li><strong>Azure subscription:</strong> Actief Azure account met contributor rechten</li>
+                                <li><strong>Service-accounts:</strong> Azure Arc service principal of managed identity</li>
+                                <li><strong>Open poorten:</strong> 443 (HTTPS outbound), 445 (SMB voor file shares)</li>
+                                <li><strong>Certificaten:</strong> Azure Arc agent certificaten voor authenticatie</li>
+                                <li><strong>Azure Arc enabled:</strong> Server moet verbonden zijn met Azure Arc</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>🔗 Azure Arc Onboarding</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 37.1: Azure Arc prerequisites controleren</strong>
+                            <p>1. Controleer Windows Server versie (2012 R2 of hoger)</p>
+                            <p>2. Zorg voor internet connectiviteit naar Azure</p>
+                            <p>3. Controleer firewall instellingen voor outbound HTTPS</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 37.2: Azure Arc agent installeren</strong>
+                            <p>Download en installeer Azure Arc agent:</p>
+                            <pre style="background: #1a202c; color: #e2e8f0; padding: 10px; border-radius: 4px; font-family: 'Consolas', monospace;">
+# PowerShell installatie
+Invoke-WebRequest -Uri "https://aka.ms/AzureArcAgent" -OutFile "AzureArcAgent.msi"
+msiexec /i AzureArcAgent.msi /quiet
+
+# Of via Chocolatey
+choco install azure-arc-agent -y
+                            </pre>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 37.3: Server registreren bij Azure Arc</strong>
+                            <p>Registreer de server in Azure:</p>
+                            <pre style="background: #1a202c; color: #e2e8f0; padding: 10px; border-radius: 4px; font-family: 'Consolas', monospace;">
+# Connect to Azure Arc
+Connect-AzAccount
+$subscriptionId = "your-subscription-id"
+$resourceGroup = "your-resource-group"
+
+New-AzConnectedMachine -Name "LAB-DC01" -ResourceGroupName $resourceGroup -Location "West Europe"
+                            </pre>
+                        </li>
+                    </ul>
+
+                    <h3>📊 Azure Arc Management Features</h3>
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Beschrijving</th>
+                            <th>Voordelen</th>
+                        </tr>
+                        <tr>
+                            <td><strong>VM extensions</strong></td>
+                            <td>Deploy Azure VM extensions op on-premises servers</td>
+                            <td>Gecentraliseerde configuratie en monitoring</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Azure Policy</strong></td>
+                            <td>Apply Azure policies op on-premises servers</td>
+                            <td>Compliance enforcement en governance</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Azure Monitor</strong></td>
+                            <td>Geïntegreerde monitoring en alerting</td>
+                            <td>Centrale logging en performance monitoring</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Update Management</strong></td>
+                            <td>Automated patching via Azure Automation</td>
+                            <td>Gecentraliseerd patch management</td>
+                        </tr>
+                    </table>
+
+                    <h3>🔒 Security & Compliance</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Azure Arc security configureren</strong>
+                            <p>Implementeer security best practices voor Azure Arc:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>Gebruik managed identities voor authenticatie</li>
+                                <li>Configureer Azure RBAC voor access control</li>
+                                <li>Enable Azure Defender voor threat protection</li>
+                                <li>Monitor Azure Arc agent health</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sectie 38: Kubernetes op Windows Server -->
+            <div class="section" id="section-38">
+                <div class="section-header" onclick="toggleSection(38)">
+                    <h2><span class="section-number">38</span> Kubernetes op Windows Server</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Deploy en beheer Kubernetes clusters op Windows Server voor containerized workloads.
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <span class="info-icon">📋</span>
+                        <div>
+                            <strong>Benodigde infrastructuur:</strong>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li><strong>Windows Server:</strong> 2019/2022 met Hyper-V rol</li>
+                                <li><strong>Container runtime:</strong> Docker of containerd</li>
+                                <li><strong>Kubernetes versie:</strong> v1.24+ voor Windows support</li>
+                                <li><strong>Network:</strong> CNI plugin (Calico, Flannel)</li>
+                                <li><strong>Storage:</strong> CSI driver voor persistent volumes</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>🐳 Windows Containers Setup</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 38.1: Container features inschakelen</strong>
+                            <p>Installeer Windows container features:</p>
+                            <pre style="background: #1a202c; color: #e2e8f0; padding: 10px; border-radius: 4px; font-family: 'Consolas', monospace;">
+# Enable Windows containers
+Install-WindowsFeature -Name Containers
+Restart-Computer
+
+# Install Docker
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+Install-Module -Name DockerMsftProvider -Repository PSGallery -Force
+Install-Package -Name docker -ProviderName DockerMsftProvider
+Restart-Service docker
+                            </pre>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 38.2: Kubernetes cluster deployen</strong>
+                            <p>Gebruik kubeadm voor cluster setup:</p>
+                            <pre style="background: #1a202c; color: #e2e8f0; padding: 10px; border-radius: 4px; font-family: 'Consolas', monospace;">
+# Install Kubernetes tools
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+Install-Module -Name KubernetesTools -Repository PSGallery -Force
+
+# Initialize cluster
+kubeadm init --pod-network-cidr=192.168.0.0/16
+
+# Deploy network plugin (Calico)
+kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+                            </pre>
+                        </li>
+                    </ul>
+
+                    <h3>🔧 Kubernetes op Windows Best Practices</h3>
+                    <table>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Windows Specific</th>
+                            <th>Recommendation</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Networking</strong></td>
+                            <td>CNI plugins</td>
+                            <td>Gebruik Calico voor Windows/Linux mixed clusters</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Storage</strong></td>
+                            <td>CSI drivers</td>
+                            <td>Implementeer SMB CSI voor Windows workloads</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Security</strong></td>
+                            <td>Windows GMSA</td>
+                            <td>Configureer Group Managed Service Accounts</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Monitoring</strong></td>
+                            <td>Windows exporters</td>
+                            <td>Deploy Prometheus Windows exporter</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Sectie 39: AI/ML Workloads -->
+            <div class="section" id="section-39">
+                <div class="section-header" onclick="toggleSection(39)">
+                    <h2><span class="section-number">39</span> AI/ML Workloads</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Configureer Windows Server voor AI/ML workloads met GPU ondersteuning en frameworks.
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <span class="info-icon">📋</span>
+                        <div>
+                            <strong>Benodigde infrastructuur:</strong>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li><strong>GPU hardware:</strong> NVIDIA GPU met CUDA ondersteuning</li>
+                                <li><strong>Drivers:</strong> NVIDIA GPU drivers voor Windows Server</li>
+                                <li><strong>Frameworks:</strong> TensorFlow, PyTorch, CUDA toolkit</li>
+                                <li><strong>Storage:</strong> High-performance storage voor datasets</li>
+                                <li><strong>Network:</strong> Low-latency networking voor distributed training</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>🎮 GPU Setup voor AI/ML</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 39.1: NVIDIA drivers installeren</strong>
+                            <p>Installeer NVIDIA GPU drivers:</p>
+                            <pre style="background: #1a202c; color: #e2e8f0; padding: 10px; border-radius: 4px; font-family: 'Consolas', monospace;">
+# Download latest NVIDIA drivers
+# Install in clean boot mode
+pnputil.exe -i -a C:\NVIDIA\DisplayDriver\nv_dispi.inf
+
+# Verify installation
+nvidia-smi
+                            </pre>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 39.2: CUDA Toolkit installeren</strong>
+                            <p>Installeer CUDA voor GPU computing:</p>
+                            <pre style="background: #1a202c; color: #e2e8f0; padding: 10px; border-radius: 4px; font-family: 'Consolas', monospace;">
+# Install CUDA Toolkit
+# Download from NVIDIA developer site
+cuda_12.0.0_windows.exe -s nvcc_12.0 cudart_12.0 cufft_12.0 curand_12.0 cusolver_12.0 cusparse_12.0
+
+# Set environment variables
+$env:CUDA_PATH = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.0"
+                            </pre>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 39.3: ML frameworks configureren</strong>
+                            <p>Installeer TensorFlow/PyTorch:</p>
+                            <pre style="background: #1a202c; color: #e2e8f0; padding: 10px; border-radius: 4px; font-family: 'Consolas', monospace;">
+# Install Python and pip
+# Install TensorFlow with GPU support
+pip install tensorflow[and-cuda]
+
+# Install PyTorch
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+                            </pre>
+                        </li>
+                    </ul>
+
+                    <h3>⚡ Performance Optimization</h3>
+                    <table>
+                        <tr>
+                            <th>Optimization</th>
+                            <th>Beschrijving</th>
+                            <th>Impact</th>
+                        </tr>
+                        <tr>
+                            <td><strong>GPU Memory Management</strong></td>
+                            <td>Efficient GPU memory allocation</td>
+                            <td>Reduced memory fragmentation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mixed Precision Training</strong></td>
+                            <td>FP16/FP32 mixed precision</td>
+                            <td>2x faster training</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Distributed Training</strong></td>
+                            <td>Multi-GPU/multi-node training</td>
+                            <td>Linear scaling performance</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Data Pipeline Optimization</strong></td>
+                            <td>Async data loading, prefetching</td>
+                            <td>Eliminate I/O bottlenecks</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Sectie 40: Modern Endpoint Management -->
+            <div class="section" id="section-40">
+                <div class="section-header" onclick="toggleSection(40)">
+                    <h2><span class="section-number">40</span> Modern Endpoint Management</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-box">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Doel:</strong> Implementeer moderne endpoint management oplossingen met Microsoft Intune en Autopilot.
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <span class="info-icon">📋</span>
+                        <div>
+                            <strong>Benodigde infrastructuur:</strong>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li><strong>Microsoft 365 licentie:</strong> Intune enabled tenant</li>
+                                <li><strong>Azure AD:</strong> Geconfigureerde Azure Active Directory</li>
+                                <li><strong>Device enrollment:</strong> Autopilot of manual enrollment</li>
+                                <li><strong>Network toegang:</strong> Internet connectiviteit voor cloud management</li>
+                                <li><strong>Security policies:</strong> Conditional access en compliance policies</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>📱 Microsoft Intune Setup</h3>
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 40.1: Intune tenant configureren</strong>
+                            <p>1. Ga naar Microsoft Endpoint Manager admin center</p>
+                            <p>2. Configureer device enrollment restrictions</p>
+                            <p>3. Stel device compliance policies in</p>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 40.2: Autopilot deployment configureren</strong>
+                            <p>Configureer Windows Autopilot:</p>
+                            <pre style="background: #1a202c; color: #e2e8f0; padding: 10px; border-radius: 4px; font-family: 'Consolas', monospace;">
+# Import Autopilot devices via CSV
+# CSV format: Device Serial Number,Windows Product ID,Hardware Hash,Manufacturer,Model
+
+# Via PowerShell
+Install-Module -Name WindowsAutoPilotIntune -Force
+Connect-MSGraph
+Import-AutoPilotCSV -csvFilePath "C:\AutopilotDevices.csv"
+                            </pre>
+                        </li>
+
+                        <li class="step-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <strong>Stap 40.3: Configuration profiles toepassen</strong>
+                            <p>Deploy device configuration profiles:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>Device restrictions</li>
+                                <li>Endpoint protection settings</li>
+                                <li>Wi-Fi en VPN configuraties</li>
+                                <li>Application deployment</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h3>🔐 Security Management</h3>
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Beschrijving</th>
+                            <th>Voordelen</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Conditional Access</strong></td>
+                            <td>Access control gebaseerd op device compliance</td>
+                            <td>Zero trust security model</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Endpoint Detection</strong></td>
+                            <td>Advanced threat protection</td>
+                            <td>Proactive threat mitigation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Device Compliance</strong></td>
+                            <td>Automated compliance checking</td>
+                            <td>Continuous compliance monitoring</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Remote Actions</strong></td>
+                            <td>Remote device management</td>
+                            <td>Immediate incident response</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
             </div>
         </div>
     </div>
