@@ -624,6 +624,22 @@
                 border-radius: 4px;
             }
 
+            /* Specific handling for sections 3-5 to prevent widening */
+            #section-3 .section-content pre,
+            #section-4 .section-content pre,
+            #section-5 .section-content pre {
+                overflow-x: auto;
+                white-space: pre;
+                word-wrap: normal;
+            }
+
+            #section-3 .section-content table,
+            #section-4 .section-content table,
+            #section-5 .section-content table {
+                overflow-x: auto;
+                white-space: normal;
+            }
+
             .section-content th,
             .section-content td {
                 padding: 4px 6px;
