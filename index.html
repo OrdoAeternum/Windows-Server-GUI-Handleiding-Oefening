@@ -897,11 +897,129 @@
                 height: 45px;
                 font-size: 18px;
             }
-
+        
             .back-to-top::before {
                 font-size: 20px;
             }
         }
+        
+        /* 0) Global safety net */
+        
+        html, body {
+        
+          max-width: 100%;
+        
+          overflow-x: clip; /* avoids scrollbars from fixed children */
+        
+        }
+        
+        /* 1) Mobile layout fixes */
+        
+        @media (max-width: 768px) {
+        
+          /* Sections: containers must never create horizontal scroll */
+        
+          .section,
+        
+          #section-3, #section-4, #section-5 {
+        
+            width: 100% !important;
+        
+            max-width: 100% !important;
+        
+            box-sizing: border-box;
+        
+            overflow-x: hidden !important;
+        
+          }
+        
+          /* Content wrapper should also not widen; only inner pre/table may scroll */
+        
+          #section-3 .section-content,
+        
+          #section-4 .section-content,
+        
+          #section-5 .section-content,
+        
+          .section .section-content {
+        
+            overflow-x: hidden !important;
+        
+            max-width: 100% !important;
+        
+          }
+        
+          /* Only these may scroll horizontally if they really need to */
+        
+          .section .section-content pre {
+        
+            display: block;
+        
+            max-width: 100%;
+        
+            overflow-x: auto;
+        
+            -webkit-overflow-scrolling: touch;
+        
+            white-space: pre;   /* keep code lines intact */
+        
+            word-wrap: normal;
+        
+          }
+        
+          .section .section-content table {
+        
+            display: block;
+        
+            max-width: 100%;
+        
+            overflow-x: auto;
+        
+            -webkit-overflow-scrolling: touch;
+        
+            white-space: normal; /* do NOT force nowrap on mobile */
+        
+          }
+        
+          /* 2) Floating TOC button: remove text overflow that widens the page */
+        
+          .mobile-toc-toggle {
+        
+            width: 44px !important;
+        
+            height: 44px !important;
+        
+            padding: 0 !important;
+        
+            border-radius: 50%;
+        
+            display: grid;
+        
+            place-items: center;
+        
+            overflow: hidden;      /* clamp */
+        
+            text-indent: -9999px;  /* hide the "Menu" word */
+        
+          }
+        
+          .mobile-toc-toggle::before {
+        
+            content: "📋";
+        
+            text-indent: 0;
+        
+            font-size: 20px;
+        
+            line-height: 1;
+        
+          }
+        
+        }
+        
+        /* 3) If any copy of your CSS still has .section { max-width: 1000px; } */
+        
+        .section { max-width: 100% !important; }
     </style>
 </head>
 <body>
@@ -913,7 +1031,7 @@
     </div>
 
     <div class="container">
-        <button class="mobile-toc-toggle" id="mobileTocToggle" aria-label="Inhoudsopgave openen" title="Toggle Table of Contents">📋</button>
+        <button class="mobile-toc-toggle" id="mobileTocToggle" aria-label="Inhoudsopgave openen" title="Inhoudsopgave"></button>
         <div class="sidebar" id="sidebar">
             <h3>📋 Inhoudsopgave</h3>
             <ul class="toc-list">
