@@ -285,6 +285,14 @@
             border: 1px solid rgba(0,255,0,0.1);
         }
 
+        /* Prevent sections 3, 4, and 5 from widening when opened */
+        #section-3 .section-content,
+        #section-4 .section-content,
+        #section-5 .section-content {
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
         .section.active {
             margin: 0 auto 40px auto;
         }
@@ -639,6 +647,14 @@
             #section-5 .section-content table {
                 overflow-x: auto;
                 white-space: normal;
+            }
+
+            /* Prevent sections 3, 4, and 5 from widening on mobile */
+            #section-3 .section-content,
+            #section-4 .section-content,
+            #section-5 .section-content {
+                overflow-x: auto;
+                max-width: 100%;
             }
 
             .section-content th,
