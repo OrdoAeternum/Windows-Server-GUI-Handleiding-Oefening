@@ -6035,10 +6035,15 @@ Criteria voor keuze:
             }
 
             const allSections = document.querySelectorAll('.section');
-            allSections.forEach(s => s.classList.remove('active'));
 
-            // Always activate the clicked section and scroll to it
-            section.classList.add('active');
+            if (section.classList.contains('active')) {
+                // If already active, close it
+                section.classList.remove('active');
+            } else {
+                // Close all others and open this one
+                allSections.forEach(s => s.classList.remove('active'));
+                section.classList.add('active');
+            }
 
             // Small delay to ensure DOM updates before scrolling
             setTimeout(() => {
