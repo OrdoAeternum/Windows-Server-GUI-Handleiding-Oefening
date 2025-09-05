@@ -493,14 +493,20 @@
             }
 
             .sidebar {
+                display: none; /* Hide sidebar by default on mobile */
                 width: 100%;
                 border-radius: 0;
                 border-right: none;
                 border-bottom: 2px solid rgba(0,128,0,0.2);
                 position: static;
-                max-height: 200px;
+                max-height: 300px;
                 margin-bottom: 15px;
                 padding: 15px;
+                overflow-y: auto;
+            }
+
+            .sidebar.show {
+                display: block; /* Show when toggle is active */
             }
 
             .sidebar h3 {
@@ -516,11 +522,32 @@
             .header {
                 padding: 15px;
                 text-align: center;
+                position: relative;
             }
 
             .header h1 {
                 font-size: 1.5em;
                 margin-bottom: 5px;
+            }
+
+            /* Mobile menu toggle button */
+            .mobile-menu-toggle {
+                display: block;
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                background: linear-gradient(135deg, #008000, #00ff00);
+                color: white;
+                border: none;
+                border-radius: 6px;
+                padding: 8px 12px;
+                cursor: pointer;
+                font-size: 0.9em;
+                box-shadow: 0 2px 8px rgba(0, 128, 0, 0.3);
+            }
+
+            .mobile-menu-toggle:hover {
+                background: linear-gradient(135deg, #00ff00, #008000);
             }
 
             .progress-container {
@@ -677,13 +704,18 @@
             }
 
             .sidebar {
-                max-height: 150px;
+                max-height: 250px;
                 padding: 12px;
             }
 
             .toc-list a {
                 font-size: 0.8em;
                 padding: 3px 5px;
+            }
+
+            .mobile-menu-toggle {
+                padding: 6px 10px;
+                font-size: 0.8em;
             }
         }
 
@@ -796,6 +828,7 @@
         <div class="content">
             <div class="header">
                 <h1>🖥️ Windows Server 2022 - GUI Guide/Opdracht</h1>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" title="Toggle Table of Contents">📋 Menu</button>
             </div>
 
             <!-- Sectie 1: Hyper-V Lab Implementatie -->
@@ -6013,6 +6046,33 @@ Criteria voor keuze:
                 behavior: 'smooth'
             });
         });
+
+        // Mobile Menu Toggle functionality
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const sidebar = document.querySelector('.sidebar');
+
+        if (mobileMenuToggle && sidebar) {
+            mobileMenuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('show');
+                // Update button text based on state
+                if (sidebar.classList.contains('show')) {
+                    mobileMenuToggle.textContent = '❌ Close';
+                } else {
+                    mobileMenuToggle.textContent = '📋 Menu';
+                }
+            });
+
+            // Close sidebar when clicking on a link (mobile)
+            const tocLinks = sidebar.querySelectorAll('.toc-list a');
+            tocLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.remove('show');
+                        mobileMenuToggle.textContent = '📋 Menu';
+                    }
+                });
+            });
+        }
     </script>
 
     <!-- Copyright Notice -->
