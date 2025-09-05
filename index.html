@@ -544,6 +544,27 @@
                 cursor: pointer;
                 font-size: 0.9em;
                 box-shadow: 0 2px 8px rgba(0, 128, 0, 0.3);
+                z-index: 1001; /* Ensure it's above other elements */
+            }
+
+            /* Debug indicator for mobile testing */
+            .debug-indicator {
+                position: fixed;
+                bottom: 60px;
+                right: 15px;
+                background: rgba(255, 0, 0, 0.8);
+                color: white;
+                padding: 5px 10px;
+                border-radius: 4px;
+                font-size: 0.8em;
+                z-index: 1002;
+                display: none;
+            }
+
+            @media (max-width: 768px) {
+                .debug-indicator {
+                    display: block;
+                }
             }
 
             .mobile-menu-toggle:hover {
@@ -5975,6 +5996,9 @@ Criteria voor keuze:
     <!-- Back to Top Button -->
     <button class="back-to-top" id="backToTop" title="Terug naar boven"></button>
 
+    <!-- Debug Indicator -->
+    <div class="debug-indicator" id="debugIndicator">Debug: Loading...</div>
+
     <script>
         // Section toggling functionality
         function toggleSection(sectionNumber) {
@@ -6051,26 +6075,104 @@ Criteria voor keuze:
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
         const sidebar = document.querySelector('.sidebar');
 
+        // Debug logs
+        console.log('Mobile debug - Window width:', window.innerWidth);
+        console.log('Mobile debug - Mobile menu toggle found:', !!mobileMenuToggle);
+        console.log('Mobile debug - Sidebar found:', !!sidebar);
+
         if (mobileMenuToggle && sidebar) {
+            console.log('Mobile debug - Adding click listener to toggle button');
+
             mobileMenuToggle.addEventListener('click', function() {
+                console.log('Mobile debug - Toggle button clicked');
+                console.log('Mobile debug - Sidebar classes before:', sidebar.className);
+
                 sidebar.classList.toggle('show');
+
+                console.log('Mobile debug - Sidebar classes after:', sidebar.className);
+
                 // Update button text based on state
                 if (sidebar.classList.contains('show')) {
                     mobileMenuToggle.textContent = '❌ Close';
+                    console.log('Mobile debug - Sidebar shown, button text updated to Close');
                 } else {
                     mobileMenuToggle.textContent = '📋 Menu';
+                    console.log('Mobile debug - Sidebar hidden, button text updated to Menu');
                 }
             });
 
             // Close sidebar when clicking on a link (mobile)
             const tocLinks = sidebar.querySelectorAll('.toc-list a');
-            tocLinks.forEach(link => {
+            console.log('Mobile debug - Found', tocLinks.length, 'TOC links');
+
+            tocLinks.forEach((link, index) => {
                 link.addEventListener('click', function() {
+                    console.log('Mobile debug - TOC link', index, 'clicked, window width:', window.innerWidth);
                     if (window.innerWidth <= 768) {
+                        console.log('Mobile debug - Closing sidebar after link click');
                         sidebar.classList.remove('show');
                         mobileMenuToggle.textContent = '📋 Menu';
                     }
                 });
+            });
+        } else {
+            console.error('Mobile debug - Mobile menu toggle or sidebar not found!');
+        }
+
+        // Debug indicator
+        const debugIndicator = document.getElementById('debugIndicator');
+
+        // Check CSS media query application
+        function checkMobileCSS() {
+            const computedStyle = window.getComputedStyle(sidebar);
+            const containerStyle = window.getComputedStyle(document.querySelector('.container'));
+
+            console.log('Mobile debug - Sidebar display:', computedStyle.display);
+            console.log('Mobile debug - Sidebar visibility:', computedStyle.visibility);
+            console.log('Mobile debug - Container flex-direction:', containerStyle.flexDirection);
+
+            // Update debug indicator
+            if (debugIndicator) {
+                const isMobile = window.innerWidth <= 768;
+                const sidebarVisible = computedStyle.display !== 'none';
+                const sidebarShown = sidebar.classList.contains('show');
+
+                debugIndicator.textContent = `${window.innerWidth}px | Mobile: ${isMobile} | Sidebar: ${sidebarVisible ? (sidebarShown ? 'shown' : 'hidden') : 'none'}`;
+                debugIndicator.style.background = isMobile ? 'rgba(255, 0, 0, 0.8)' : 'rgba(0, 128, 0, 0.8)';
+            }
+        }
+
+        // Run initial check
+        checkMobileCSS();
+
+        // Check on window resize
+        window.addEventListener('resize', function() {
+            console.log('Mobile debug - Window resized to:', window.innerWidth);
+            checkMobileCSS();
+        });
+
+        // Update debug indicator on sidebar changes
+        if (mobileMenuToggle && sidebar) {
+            // Override the existing click listener to include debug updates
+            mobileMenuToggle.addEventListener('click', function() {
+                console.log('Mobile debug - Toggle button clicked');
+                console.log('Mobile debug - Sidebar classes before:', sidebar.className);
+
+                sidebar.classList.toggle('show');
+
+                console.log('Mobile debug - Sidebar classes after:', sidebar.className);
+
+                // Update button text based on state
+                if (sidebar.classList.contains('show')) {
+                    mobileMenuToggle.textContent = '❌ Close';
+                    console.log('Mobile debug - Sidebar shown, button text updated to Close');
+                } else {
+                    mobileMenuToggle.textContent = '📋 Menu';
+                    console.log('Mobile debug - Sidebar hidden, button text updated to Menu');
+                }
+
+                // Update debug indicator
+                checkMobileCSS();
             });
         }
     </script>
