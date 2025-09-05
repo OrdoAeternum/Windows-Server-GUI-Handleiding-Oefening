@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Windows Server 2022 - GUI Guide/Opdracht</title>
     <style>
+        /* Safety net: never allow page-wide horizontal scroll on mobile */
+        html, body {
+            max-width: 100%;
+            overflow-x: clip; /* better than hidden for fixed children */
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -511,13 +517,24 @@
             color: white;
             border: none;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 16px;
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            display: grid;
+            place-items: center;
+            overflow: hidden;      /* clamp overflow */
+            text-indent: -9999px;  /* hide the word "Menu" visually */
             cursor: pointer;
             z-index: 1001;
             box-shadow: 0 4px 12px rgba(0, 128, 0, 0.3);
             transition: all 0.3s ease;
+        }
+
+        .mobile-toc-toggle::before {
+            content: "📋";
+            text-indent: 0;
+            font-size: 20px;
+            line-height: 1;
         }
 
         .mobile-toc-toggle:hover {
@@ -589,13 +606,14 @@
                 padding: 15px;
             }
 
+            /* 1) Clamp every section to the viewport width */
             .section {
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+                overflow-x: hidden; /* container must not scroll */
                 margin-bottom: 15px;
                 border-radius: 8px;
-                max-width: 100%;
-                width: 100%;
-                box-sizing: border-box;
-                overflow-x: hidden;
             }
 
             .section-header {
@@ -650,33 +668,39 @@
                 border-radius: 4px;
             }
 
-            /* Specific handling for sections 3-5 to prevent widening */
+            /* 2) Sections 3–5 must NOT create horizontal scroll themselves */
+            #section-3, #section-4, #section-5 {
+                overflow-x: hidden !important; /* override earlier auto */
+            }
+
+            /* 3) Let only the truly wide children scroll horizontally */
+            #section-3 .section-content,
+            #section-4 .section-content,
+            #section-5 .section-content {
+                overflow-x: hidden; /* clamp content wrapper */
+            }
+
+            /* Code blocks: horizontal scroll inside the block only */
             #section-3 .section-content pre,
             #section-4 .section-content pre,
             #section-5 .section-content pre {
+                display: block;
+                max-width: 100%;
                 overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
                 white-space: pre;
                 word-wrap: normal;
             }
 
+            /* Tables: keep inside, scroll horizontally if needed */
             #section-3 .section-content table,
             #section-4 .section-content table,
             #section-5 .section-content table {
+                display: block;
+                max-width: 100%;
                 overflow-x: auto;
-                white-space: normal;
-            }
-
-            /* Prevent sections 3, 4, and 5 from widening on mobile */
-            #section-3,
-            #section-4,
-            #section-5 {
-                overflow-x: hidden;
-            }
-
-            #section-3 .section-content,
-            #section-4 .section-content,
-            #section-5 .section-content {
-                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                white-space: normal; /* override any nowrap */
             }
 
             .section-content th,
@@ -891,7 +915,7 @@
     </div>
 
     <div class="container">
-        <button class="mobile-toc-toggle" id="mobileTocToggle" title="Toggle Table of Contents">📋 Menu</button>
+        <button class="mobile-toc-toggle" id="mobileTocToggle" aria-label="Inhoudsopgave openen" title="Toggle Table of Contents">📋</button>
         <div class="sidebar" id="sidebar">
             <h3>📋 Inhoudsopgave</h3>
             <ul class="toc-list">
