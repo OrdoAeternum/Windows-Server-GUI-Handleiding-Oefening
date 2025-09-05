@@ -535,6 +535,9 @@
             .section {
                 margin-bottom: 15px;
                 border-radius: 8px;
+                max-width: 100%;
+                width: 100%;
+                box-sizing: border-box;
             }
 
             .section-header {
@@ -554,6 +557,20 @@
 
             .section-content {
                 padding: 15px;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+
+            .section-content pre {
+                white-space: pre-wrap;
+                word-wrap: break-word;
+                overflow-x: auto;
+                max-width: 100%;
+            }
+
+            .section-content code {
+                word-wrap: break-word;
+                white-space: pre-wrap;
             }
 
             .section-content h3 {
