@@ -293,13 +293,15 @@
             box-sizing: border-box;
         }
 
-        /* Prevent sections 3, 4, and 5 from widening when opened */
+        /* MAXIMUM CONSTRAINTS - Prevent sections 3, 4, and 5 from widening when opened */
         #section-3,
         #section-4,
         #section-5 {
             width: 100% !important;
             max-width: 100% !important;
+            min-width: 100% !important;
             overflow-x: hidden !important;
+            box-sizing: border-box !important;
         }
 
         #section-3 .section-content,
@@ -307,7 +309,10 @@
         #section-5 .section-content {
             overflow-x: hidden !important;
             max-width: 100% !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
         }
+
 
         /* Allow inner elements to scroll if needed */
         #section-3 .section-content pre,
@@ -351,6 +356,34 @@
             margin: 0 auto 40px auto !important;
             width: 100% !important;
             max-width: 100% !important;
+            overflow-x: hidden !important;
+            box-sizing: border-box !important;
+        }
+
+        /* MAXIMUM SPECIFICITY - Additional containment for sections 3-5 content when visible */
+        body #section-3.active .section-content, body #section-4.active .section-content, body #section-5.active .section-content,
+        html body #section-3.active .section-content, html body #section-4.active .section-content, html body #section-5.active .section-content {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 100% !important;
+            overflow-x: hidden !important;
+            box-sizing: border-box !important;
+        }
+
+        /* FORCE CONTAINMENT - Prevent any child elements from expanding sections 3-5 */
+        body #section-3 *, body #section-4 *, body #section-5 *,
+        html body #section-3 *, html body #section-4 *, html body #section-5 * {
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* SPECIFIC FORCE for tables and pre elements in sections 3-5 */
+        body #section-3 table, body #section-4 table, body #section-5 table,
+        body #section-3 pre, body #section-4 pre, body #section-5 pre {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            box-sizing: border-box !important;
         }
         
         .section.active .section-content {
@@ -543,79 +576,126 @@
             color: #e2e8f0;
         }
 
-        /* Modern TOC Button Styles */
-        .toc-toggle-btn {
+        /* Dropdown Table of Contents Styles */
+        .toc-dropdown {
+            position: relative;
             display: none;
-            position: fixed;
-            top: 85px;
-            right: 20px;
-            background: linear-gradient(135deg, #008000, #00ff00);
-            color: white;
-            border: none;
-            border-radius: 16px;
+            margin-bottom: 20px;
+        }
+
+        .toc-dropdown-toggle {
+            width: 100%;
+            background: #444;
+            color: #e2e8f0;
+            border: 1px solid #666;
+            border-radius: 0;
             padding: 12px 16px;
             cursor: pointer;
-            z-index: 1001;
-            box-shadow: 0 4px 20px rgba(0, 128, 0, 0.3);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-weight: 600;
             font-size: 14px;
+            font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 8px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            justify-content: space-between;
+            transition: none;
         }
 
-        .toc-toggle-btn:hover {
-            background: linear-gradient(135deg, #00ff00, #008000);
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 30px rgba(0, 128, 0, 0.4);
+        .toc-dropdown-toggle:hover {
+            background: #555;
         }
 
-        .toc-toggle-btn:active {
-            transform: translateY(-1px) scale(1.02);
-            box-shadow: 0 4px 15px rgba(0, 128, 0, 0.3);
-        }
-
-        .toc-toggle-btn:focus {
+        .toc-dropdown-toggle:focus {
             outline: none;
-            box-shadow: 0 4px 20px rgba(0, 128, 0, 0.3), 0 0 0 3px rgba(0, 255, 0, 0.3);
+            border-color: #666;
         }
 
-        .toc-icon {
-            font-size: 18px;
-            line-height: 1;
-            transition: transform 0.3s ease;
+        .toc-dropdown-toggle.active {
+            border-color: #666;
+            background: #555;
         }
 
-        .toc-text {
-            font-size: 12px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            opacity: 0.9;
-        }
-
-        .toc-toggle-btn.active .toc-icon {
+        .toc-dropdown-toggle.active .toc-dropdown-arrow {
             transform: rotate(180deg);
         }
 
-        /* Pulse animation for attention */
-        .toc-toggle-btn.pulse {
-            animation: pulse 2s infinite;
+        .toc-dropdown-icon {
+            font-size: 16px;
+            margin-right: 8px;
         }
 
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 4px 20px rgba(0, 128, 0, 0.3);
-            }
-            50% {
-                box-shadow: 0 4px 20px rgba(0, 128, 0, 0.3), 0 0 0 10px rgba(0, 255, 0, 0.1);
-            }
-            100% {
-                box-shadow: 0 4px 20px rgba(0, 128, 0, 0.3);
-            }
+        .toc-dropdown-text {
+            flex: 1;
+            text-align: left;
+        }
+
+        .toc-dropdown-arrow {
+            font-size: 12px;
+            transition: transform 0.2s ease;
+            margin-left: 8px;
+        }
+
+        .toc-dropdown-content {
+            background: #1a202c;
+            border: 1px solid #4a5568;
+            border-radius: 0 0 6px 6px;
+            margin-top: -1px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .toc-dropdown.open .toc-dropdown-content {
+            max-height: 400px;
+            padding: 16px;
+        }
+
+        .toc-dropdown-header {
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #4a5568;
+        }
+
+        .toc-dropdown-header h4 {
+            color: #e2e8f0;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .toc-dropdown-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 4px;
+        }
+
+        .toc-dropdown-list li {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .toc-dropdown-list li:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .toc-dropdown-list a {
+            display: block;
+            padding: 8px 12px;
+            color: #c7d2d8;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 400;
+            transition: color 0.2s ease;
+        }
+
+        .toc-dropdown-list a:hover {
+            /* color remains default */
         }
 
         /* Mobile responsiveness - Simplified approach */
@@ -627,21 +707,69 @@
             .container {
                 flex-direction: column;
                 margin: 70px auto 0 auto;
-            }
-
-            .toc-toggle-btn {
-                display: flex;
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
             }
 
             .sidebar {
-                width: 100%;
-                border-radius: 0;
-                border-right: none;
-                border-bottom: 2px solid rgba(0,128,0,0.2);
-                position: static;
-                margin-bottom: 15px;
                 display: none;
-                transition: all 0.3s ease;
+            }
+
+            .toc-dropdown {
+                display: block;
+                width: 100%;
+                margin-bottom: 15px;
+            }
+
+            .content {
+                width: 100%;
+                max-width: 100%;
+                padding: 10px;
+                box-sizing: border-box;
+            }
+
+            .section {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 0 15px 0 !important;
+                box-sizing: border-box !important;
+                border-radius: 8px;
+            }
+
+            .section-header {
+                padding: 12px 15px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .section-content {
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 15px;
+                box-sizing: border-box !important;
+                overflow-x: hidden;
+            }
+        }
+
+        /* Desktop: Show TOC integrated in sidebar */
+        @media (min-width: 769px) {
+            .toc-dropdown {
+                display: none; /* Hide fixed TOC on desktop */
+            }
+
+            .sidebar {
+                display: block; /* Show sidebar with TOC */
+                width: 280px;
+                background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+                border-radius: 15px 0 0 15px;
+                padding: 20px;
+                border-right: 2px solid rgba(0,128,0,0.2);
+                position: sticky;
+                top: 100px;
+                height: fit-content;
+                max-height: calc(100vh - 120px);
+                overflow-y: auto;
             }
 
             .sidebar.mobile-visible {
@@ -691,27 +819,270 @@
                 border-radius: 8px;
             }
 
-            /* Extra constraints for sections 3-5 on mobile - aligned with container */
-            #section-3, #section-4, #section-5 {
+            /* MAXIMUM SPECIFICITY - Extra constraints for sections 3-5 on mobile */
+            body #section-3, body #section-4, body #section-5,
+            html body #section-3, html body #section-4, html body #section-5 {
                 width: 100% !important;
                 max-width: 100% !important;
+                min-width: 100% !important;
                 margin: 0 auto 15px auto !important;
                 overflow-x: hidden !important;
                 position: relative !important;
                 left: 0 !important;
                 right: 0 !important;
+                box-sizing: border-box !important;
             }
 
-            #section-3 .section-content,
-            #section-4 .section-content,
-            #section-5 .section-content {
+            body #section-3 .section-content, body #section-4 .section-content, body #section-5 .section-content,
+            html body #section-3 .section-content, html body #section-4 .section-content, html body #section-5 .section-content {
                 width: 100% !important;
                 max-width: 100% !important;
+                min-width: 100% !important;
                 overflow-x: hidden !important;
                 padding-left: 15px !important;
                 padding-right: 15px !important;
                 box-sizing: border-box !important;
                 margin: 0 !important;
+            }
+
+            /* MAXIMUM SPECIFICITY - Strict containment for sections 3-5 when active */
+            body #section-3.active, body #section-4.active, body #section-5.active,
+            html body #section-3.active, html body #section-4.active, html body #section-5.active {
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 100% !important;
+                overflow-x: hidden !important;
+                box-sizing: border-box !important;
+            }
+
+            .section-header {
+                padding: 12px 15px;
+            }
+
+            .section-header h2 {
+                font-size: 1em;
+                gap: 12px;
+            }
+
+            .section-number {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9em;
+            }
+
+            .section-content {
+                padding: 15px;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                overflow-x: hidden;
+            }
+
+            .section.active {
+                margin: 0 0 15px 0;
+                max-width: 100%;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .section-content pre {
+                white-space: pre-wrap;
+                word-wrap: break-word;
+                overflow-x: hidden;
+                max-width: 100%;
+                font-size: 0.85em;
+            }
+
+            .section-content code {
+                word-wrap: break-word;
+                white-space: pre-wrap;
+                font-size: 0.85em;
+            }
+
+            .section-content table {
+                font-size: 0.8em;
+                overflow-x: hidden;
+                display: block;
+                white-space: nowrap;
+                max-width: 100%;
+                border-radius: 4px;
+            }
+
+
+            /* Code blocks: horizontal scroll inside the block only */
+            #section-3 .section-content pre,
+            #section-4 .section-content pre,
+            #section-5 .section-content pre {
+                display: block;
+                max-width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                white-space: pre;
+                word-wrap: normal;
+            }
+
+            /* Tables: keep inside, scroll horizontally if needed */
+            #section-3 .section-content table,
+            #section-4 .section-content table,
+            #section-5 .section-content table {
+                display: block;
+                max-width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                white-space: normal; /* override any nowrap */
+            }
+
+            .section-content th,
+            .section-content td {
+                padding: 4px 6px;
+                min-width: 80px;
+                max-width: 150px;
+                word-wrap: break-word;
+                white-space: normal;
+            }
+
+            .section-content .info-box {
+                padding: 10px;
+                font-size: 0.9em;
+            }
+
+            .section-content .info-box pre {
+                font-size: 0.8em;
+                line-height: 1.3;
+            }
+
+            .section-content .step-item {
+                font-size: 0.9em;
+            }
+
+            .section-content h3 {
+                font-size: 0.95em;
+                word-wrap: break-word;
+            }
+
+            .section-content p {
+                font-size: 0.9em;
+                line-height: 1.4;
+                word-wrap: break-word;
+            }
+
+            .section-content h3 {
+                font-size: 1em;
+                margin: 15px 0 10px 0;
+            }
+
+            .section-content p {
+                font-size: 0.95em;
+                margin-bottom: 12px;
+            }
+
+            .step-item {
+                padding: 12px 15px;
+                margin-bottom: 10px;
+                border-radius: 6px;
+            }
+
+            .step-item strong {
+                font-size: 0.95em;
+            }
+
+            .step-item p {
+                font-size: 0.9em;
+                margin-bottom: 6px;
+            }
+
+            .info-box {
+                padding: 12px;
+                flex-direction: column;
+                gap: 8px;
+                border-radius: 6px;
+            }
+
+            .info-icon {
+                align-self: flex-start;
+                font-size: 1.5em;
+            }
+
+            .info-box strong {
+                font-size: 1em;
+            }
+
+            .info-box p {
+                font-size: 0.9em;
+                margin: 6px 0;
+            }
+
+            table {
+                font-size: 0.85em;
+                overflow-x: auto;
+                display: block;
+                white-space: nowrap;
+                border-radius: 6px;
+            }
+
+            th, td {
+                padding: 6px 8px;
+                min-width: 100px;
+            }
+
+            th {
+                font-size: 0.8em;
+            }
+
+            td {
+                font-size: 0.85em;
+            }
+
+            .step-item input[type="checkbox"] {
+                width: 16px;
+                height: 16px;
+                right: 12px;
+                top: 12px;
+            }
+
+            /* 1) Clamp every section to the viewport width */
+            .section {
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+                overflow-x: hidden; /* container must not scroll */
+                margin-bottom: 15px;
+                border-radius: 8px;
+            }
+
+            /* MAXIMUM SPECIFICITY - Extra constraints for sections 3-5 on mobile */
+            body #section-3, body #section-4, body #section-5,
+            html body #section-3, html body #section-4, html body #section-5 {
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 100% !important;
+                margin: 0 auto 15px auto !important;
+                overflow-x: hidden !important;
+                position: relative !important;
+                left: 0 !important;
+                right: 0 !important;
+                box-sizing: border-box !important;
+            }
+
+            body #section-3 .section-content, body #section-4 .section-content, body #section-5 .section-content,
+            html body #section-3 .section-content, html body #section-4 .section-content, html body #section-5 .section-content {
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 100% !important;
+                overflow-x: hidden !important;
+                padding-left: 15px !important;
+                padding-right: 15px !important;
+                box-sizing: border-box !important;
+                margin: 0 !important;
+            }
+
+            /* MAXIMUM SPECIFICITY - Strict containment for sections 3-5 when active */
+            body #section-3.active, body #section-4.active, body #section-5.active,
+            html body #section-3.active, html body #section-4.active, html body #section-5.active {
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 100% !important;
+                overflow-x: hidden !important;
+                box-sizing: border-box !important;
             }
 
             .section-header {
@@ -986,7 +1357,7 @@
                 height: 45px;
                 font-size: 18px;
             }
-        
+
             .back-to-top::before {
                 font-size: 20px;
             }
@@ -1107,9 +1478,61 @@
         }
         
         /* 3) If any copy of your CSS still has .section { max-width: 1000px; } */
-        
+
         .section { max-width: 100% !important; }
-    </style>
+
+        /* ABSOLUTE PAGE-WIDE CONSTRAINTS - Prevent any content from expanding the page */
+        html, body {
+            max-width: 100vw !important;
+            overflow-x: hidden !important;
+            width: 100vw !important;
+        }
+
+        /* FORCE ALL CONTENT TO STAY WITHIN VIEWPORT */
+        .container, .content, .section, .section-content {
+            max-width: 100vw !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* PREVENT CONTENT EXPANSION IN SECTIONS 3-5 */
+        #section-3 .section-content *,
+        #section-4 .section-content *,
+        #section-5 .section-content * {
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* FORCE TABLES AND PRE ELEMENTS TO SCROLL */
+        #section-3 .section-content table,
+        #section-4 .section-content table,
+        #section-5 .section-content table,
+        #section-3 .section-content pre,
+        #section-4 .section-content pre,
+        #section-5 .section-content pre {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            display: block !important;
+            white-space: pre-wrap !important;
+            word-wrap: break-word !important;
+        }
+
+        /* CONTAIN INFO BOXES */
+        #section-3 .info-box,
+        #section-4 .info-box,
+        #section-5 .info-box {
+            max-width: 100% !important;
+            overflow-x: hidden !important;
+        }
+
+        #section-3 .info-box pre,
+        #section-4 .info-box pre,
+        #section-5 .info-box pre {
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            white-space: pre-wrap !important;
+        }
     </style>
 </head>
 <body>
@@ -1121,11 +1544,57 @@
     </div>
 
     <div class="container">
-        <!-- Modern TOC Button -->
-        <button class="toc-toggle-btn" id="tocToggleBtn" aria-label="Toggle Table of Contents" title="Table of Contents">
-            <span class="toc-icon">📋</span>
-            <span class="toc-text">TOC</span>
-        </button>
+        <!-- Dropdown Table of Contents -->
+        <div class="toc-dropdown" id="tocDropdown">
+            <button class="toc-dropdown-toggle" id="tocDropdownToggle" aria-label="Toggle Table of Contents">
+                <span class="toc-dropdown-icon">📋</span>
+                <span class="toc-dropdown-text">Table of Contents</span>
+                <span class="toc-dropdown-arrow">▼</span>
+            </button>
+            <div class="toc-dropdown-content" id="tocDropdownContent">
+                <div class="toc-dropdown-header">
+                    <h4>📋 Navigation</h4>
+                </div>
+                <ul class="toc-dropdown-list">
+                    <li><a href="#section-1" onclick="toggleSection(1)">1. Hyper-V Lab Implementatie</a></li>
+                    <li><a href="#section-2" onclick="toggleSection(2)">2. Hyper-V Installatie en Configuratie</a></li>
+                    <li><a href="#section-3" onclick="toggleSection(3)">3. Virtual Switch en Netwerk Configuratie</a></li>
+                    <li><a href="#section-4" onclick="toggleSection(4)">4. Virtual Machines Aanmaken</a></li>
+                    <li><a href="#section-5" onclick="toggleSection(5)">5. Server Rollen en Features</a></li>
+                    <li><a href="#section-6" onclick="toggleSection(6)">6. Client Testing en Validatie</a></li>
+                    <li><a href="#section-7" onclick="toggleSection(7)">7. IIS Web Server</a></li>
+                    <li><a href="#section-8" onclick="toggleSection(8)">8. File Services</a></li>
+                    <li><a href="#section-9" onclick="toggleSection(9)">9. Remote Desktop Services</a></li>
+                    <li><a href="#section-10" onclick="toggleSection(10)">10. Windows Server Backup</a></li>
+                    <li><a href="#section-11" onclick="toggleSection(11)">11. Certificate Services</a></li>
+                    <li><a href="#section-12" onclick="toggleSection(12)">12. Windows Server Update Services</a></li>
+                    <li><a href="#section-13" onclick="toggleSection(13)">13. Routing and Remote Access (RRAS)</a></li>
+                    <li><a href="#section-14" onclick="toggleSection(14)">14. Network Policy Server (NPS)</a></li>
+                    <li><a href="#section-15" onclick="toggleSection(15)">15. DirectAccess</a></li>
+                    <li><a href="#section-16" onclick="toggleSection(16)">16. Network Load Balancing</a></li>
+                    <li><a href="#section-17" onclick="toggleSection(17)">17. Performance Monitoring</a></li>
+                    <li><a href="#section-18" onclick="toggleSection(18)">18. Windows Defender & Security</a></li>
+                    <li><a href="#section-19" onclick="toggleSection(19)">19. Group Policy Management</a></li>
+                    <li><a href="#section-20" onclick="toggleSection(20)">20. Failover Clustering</a></li>
+                    <li><a href="#section-21" onclick="toggleSection(21)">21. Storage Spaces</a></li>
+                    <li><a href="#section-22" onclick="toggleSection(22)">22. RAID Configuration</a></li>
+                    <li><a href="#section-23" onclick="toggleSection(23)">23. Licentiëring & Activatie</a></li>
+                    <li><a href="#section-24" onclick="toggleSection(24)">24. Automatisering & Herhaalbaarheid</a></li>
+                    <li><a href="#section-25" onclick="toggleSection(25)">25. Geavanceerde Monitoring en Logging</a></li>
+                    <li><a href="#section-26" onclick="toggleSection(26)">26. Disaster Recovery & High Availability</a></li>
+                    <li><a href="#section-27" onclick="toggleSection(27)">27. Patch- en Updatebeheer Verdiept</a></li>
+                    <li><a href="#section-28" onclick="toggleSection(28)">28. Security Hardening</a></li>
+                    <li><a href="#section-29" onclick="toggleSection(29)">29. Storage & Prestaties</a></li>
+                    <li><a href="#section-30" onclick="toggleSection(30)">30. Troubleshooting & Best-practice Documentatie</a></li>
+                    <li><a href="#section-31" onclick="toggleSection(31)">31. Governance & Auditing</a></li>
+                    <li><a href="#section-32" onclick="toggleSection(32)">32. Visuals & Hulpmiddelen</a></li>
+                    <li><a href="#section-33" onclick="toggleSection(33)">33. Naamgevings- en adresseringsconventies</a></li>
+                    <li><a href="#section-34" onclick="toggleSection(34)">34. Capaciteitsplanning en baseline-metrics</a></li>
+                    <li><a href="#section-35" onclick="toggleSection(35)">35. Back-upstrategie per rol</a></li>
+                    <li><a href="#section-36" onclick="toggleSection(36)">36. RDS-licensing modus</a></li>
+                </ul>
+            </div>
+        </div>
         <div class="sidebar" id="sidebar">
             <h3>📋 Inhoudsopgave</h3>
             <ul class="toc-list">
@@ -6333,24 +6802,45 @@ Criteria voor keuze:
                 // If already active, close it
                 section.classList.remove('active');
             } else {
+                // IMMEDIATE CONSTRAINTS - Apply before opening for sections 3-5
+                if (window.innerWidth <= 768 && (sectionNumber === 3 || sectionNumber === 4 || sectionNumber === 5)) {
+                    section.style.width = '100%';
+                    section.style.maxWidth = '100%';
+                    section.style.minWidth = '100%';
+                    section.style.overflowX = 'hidden';
+                    section.style.boxSizing = 'border-box';
+                    section.style.margin = '0 auto 15px auto';
+
+                    const content = section.querySelector('.section-content');
+                    if (content) {
+                        content.style.width = '100%';
+                        content.style.maxWidth = '100%';
+                        content.style.overflowX = 'hidden';
+                        content.style.boxSizing = 'border-box';
+                    }
+                }
+
                 // Close all others and open this one
                 allSections.forEach(s => s.classList.remove('active'));
                 section.classList.add('active');
 
-                // Force width constraints for sections 3-5 on mobile
+                // Additional reinforcement after opening
                 if (window.innerWidth <= 768 && (sectionNumber === 3 || sectionNumber === 4 || sectionNumber === 5)) {
                     setTimeout(() => {
                         section.style.width = '100%';
                         section.style.maxWidth = '100%';
+                        section.style.minWidth = '100%';
                         section.style.overflowX = 'hidden';
-                        section.style.margin = '0 auto 15px auto';
+                        section.style.boxSizing = 'border-box';
+
                         const content = section.querySelector('.section-content');
                         if (content) {
                             content.style.width = '100%';
                             content.style.maxWidth = '100%';
                             content.style.overflowX = 'hidden';
+                            content.style.boxSizing = 'border-box';
                         }
-                    }, 50);
+                    }, 10);
                 }
             }
 
@@ -6411,55 +6901,53 @@ Criteria voor keuze:
             });
         });
 
-        // Modern TOC Button Functionality
-        const tocToggleBtn = document.getElementById('tocToggleBtn');
-        const sidebar = document.getElementById('sidebar');
+        // Dropdown Table of Contents Functionality
+        const tocDropdownToggle = document.getElementById('tocDropdownToggle');
+        const tocDropdown = document.getElementById('tocDropdown');
+        const tocDropdownContent = document.getElementById('tocDropdownContent');
 
-        if (tocToggleBtn && sidebar) {
-            // Add pulse animation initially to draw attention
-            setTimeout(() => {
-                tocToggleBtn.classList.add('pulse');
-                setTimeout(() => {
-                    tocToggleBtn.classList.remove('pulse');
-                }, 4000);
-            }, 2000);
+        if (tocDropdownToggle && tocDropdown) {
+            tocDropdownToggle.addEventListener('click', function(event) {
+                event.stopPropagation();
+                const isOpen = tocDropdown.classList.contains('open');
 
-            tocToggleBtn.addEventListener('click', function() {
-                const isVisible = sidebar.classList.contains('mobile-visible');
-
-                if (isVisible) {
-                    // Hide sidebar
-                    sidebar.classList.remove('mobile-visible');
-                    tocToggleBtn.classList.remove('active');
-                    tocToggleBtn.setAttribute('aria-expanded', 'false');
+                if (isOpen) {
+                    // Close dropdown
+                    tocDropdown.classList.remove('open');
+                    tocDropdownToggle.classList.remove('active');
+                    tocDropdownToggle.setAttribute('aria-expanded', 'false');
                 } else {
-                    // Show sidebar
-                    sidebar.classList.add('mobile-visible');
-                    tocToggleBtn.classList.add('active');
-                    tocToggleBtn.setAttribute('aria-expanded', 'true');
-
-                    // Auto-hide after 10 seconds of inactivity
-                    clearTimeout(tocToggleBtn.hideTimeout);
-                    tocToggleBtn.hideTimeout = setTimeout(() => {
-                        sidebar.classList.remove('mobile-visible');
-                        tocToggleBtn.classList.remove('active');
-                        tocToggleBtn.setAttribute('aria-expanded', 'false');
-                    }, 10000);
+                    // Open dropdown
+                    tocDropdown.classList.add('open');
+                    tocDropdownToggle.classList.add('active');
+                    tocDropdownToggle.setAttribute('aria-expanded', 'true');
                 }
             });
 
-            // Close sidebar when clicking outside
+            // Close dropdown when clicking outside
             document.addEventListener('click', function(event) {
-                if (!sidebar.contains(event.target) && !tocToggleBtn.contains(event.target)) {
-                    sidebar.classList.remove('mobile-visible');
-                    tocToggleBtn.classList.remove('active');
-                    tocToggleBtn.setAttribute('aria-expanded', 'false');
-                    clearTimeout(tocToggleBtn.hideTimeout);
+                if (!tocDropdown.contains(event.target)) {
+                    tocDropdown.classList.remove('open');
+                    tocDropdownToggle.classList.remove('active');
+                    tocDropdownToggle.setAttribute('aria-expanded', 'false');
                 }
+            });
+
+            // Close dropdown when a link is clicked
+            const tocLinks = tocDropdownContent.querySelectorAll('a');
+            tocLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    setTimeout(() => {
+                        tocDropdown.classList.remove('open');
+                        tocDropdownToggle.classList.remove('active');
+                        tocDropdownToggle.setAttribute('aria-expanded', 'false');
+                    }, 300); // Small delay to allow section to open first
+                });
             });
 
             // Initialize aria attributes
-            tocToggleBtn.setAttribute('aria-expanded', 'false');
+            tocDropdownToggle.setAttribute('aria-expanded', 'false');
+            tocDropdownToggle.setAttribute('aria-controls', 'tocDropdownContent');
         }
 
     </script>
