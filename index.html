@@ -306,6 +306,9 @@
 
         .section.active {
             margin: 0 auto 40px auto;
+            max-width: 100%;
+            width: 100%;
+            box-sizing: border-box;
         }
         
         .section.active .section-content {
@@ -619,6 +622,9 @@
 
             .section.active {
                 margin: 0 0 15px 0;
+                max-width: 100%;
+                width: 100%;
+                box-sizing: border-box;
             }
 
             .section-content pre {
@@ -660,7 +666,13 @@
                 white-space: normal;
             }
 
-            /* Allow horizontal scrolling for content in sections 3, 4, and 5 on mobile */
+            /* Prevent sections 3, 4, and 5 from widening on mobile */
+            #section-3,
+            #section-4,
+            #section-5 {
+                overflow-x: hidden;
+            }
+
             #section-3 .section-content,
             #section-4 .section-content,
             #section-5 .section-content {
